@@ -59,7 +59,7 @@ const (
 							:hasdiarrhea)
 					RETURNING id`
 
-	getPatient = `SELECT * FROM common.patient WHERE phone_number = ?`
+	getPatient = `SELECT p.* FROM common.patient p WHERE p.phone_number = $1`
 
-	getPatientHealthConstants = `SELECT hc.* FROM common.health_constant hc INNER JOIN patient p ON hc.patient_id = p.id WHERE p.phone_number = ? ORDER BY hc.date_time`
+	getPatientHealthConstants = `SELECT hc.* FROM common.health_constant hc WHERE hc.patient_id = $1 ORDER BY hc.date_time DESC`
 )

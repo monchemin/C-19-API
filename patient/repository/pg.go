@@ -3,6 +3,7 @@ package repository
 import (
 	"c19/patient/model"
 	"errors"
+	"log"
 )
 
 func (r repository) NewPatient(patient model.PatientRequest) (string, error) {
@@ -45,6 +46,7 @@ func (r repository) Patient(predicate string) ([]PatientResult, error) {
 }
 
 func (r repository) HealthConstant(predicate string) ([]HealthConstantResult, error) {
+	log.Println(predicate)
 	if len(predicate) == 0 {
 		return nil, errors.New("invalid predicate")
 	}

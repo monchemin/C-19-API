@@ -23,6 +23,7 @@ func (ps *patientService) Patient(predicate string) (model.Patient, error) {
 	if len(predicate) == 0 {
 		return model.Patient{}, errors.New("invalid data")
 	}
+
 	result, err := ps.repository.Patient(predicate)
 	if err != nil {
 		return model.Patient{}, err
@@ -34,13 +35,13 @@ func (ps *patientService) Patient(predicate string) (model.Patient, error) {
 		return model.Patient{}, err
 	}
 	patient := model.Patient{
-		ID:              patientInfo.ID,
-		PhoneNumber:     patientInfo.PhoneNumber,
+		ID:          patientInfo.ID,
+		PhoneNumber: patientInfo.PhoneNumber,
 	}
 	healthConstants := make([]model.HealthConstant, len(constantInfos))
 	for index, info := range constantInfos {
 		healthConstants[index] = model.HealthConstant{
-			PatientID:           info.PatientID,
+			PatientID:            info.PatientID,
 			DateTime:             info.DateTime,
 			Temperature:          info.Temperature,
 			IsTired:              info.IsTired,
@@ -54,7 +55,6 @@ func (ps *patientService) Patient(predicate string) (model.Patient, error) {
 			HasDiarrhea:          info.HasDiarrhea,
 		}
 	}
-
+	patient.HealthConstants = healthConstants
 	return patient, nil
 }
-
