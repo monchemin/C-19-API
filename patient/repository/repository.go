@@ -11,9 +11,9 @@ type PatientRepository interface {
 	//Add new constant return insert ID (uuid) as string or error
 	AddHealthConstant(constant model.HealthConstantRequest) (string, error)
 	//retrieve patient info base on ID or phone number both as string
-	Patient(predicate string) (PatientResult, error)
+	Patient(predicate string) ([]PatientResult, error)
 	//retrieve patient's health constant info base on ID or phone number both as string
-	HealthConstant(predicate string) (HealthConstantResult, error)
+	HealthConstant(predicate string) ([]HealthConstantResult, error)
 }
 
 type repository struct {

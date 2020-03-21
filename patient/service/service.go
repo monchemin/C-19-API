@@ -3,31 +3,19 @@ package service
 import (
 	"c19/patient/model"
 	"c19/patient/repository"
-	"errors"
 )
 
 type PatientService interface {
+	//add new patient
   Add(request model.PatientRequest) (string, error)
+  // add constant
   AddHealthConstant(request model.HealthConstantRequest) (string, error)
-
+  //retrieve patient info and constant since date
+  Patient(predicate string) (model.Patient, error)
 }
 
 type patientService struct {
 	repository repository.PatientRepository
-}
-
-func (ps *patientService) Add(request model.PatientRequest) (string, error) {
-	if !request.IsValid() {
-		return "", errors.New("invalid request data")
-	}
-	return ps.repository.NewPatient(request)
-}
-
-func (ps *patientService) AddHealthConstant(request model.HealthConstantRequest) (string, error) {
-	if !request.IsValid() {
-		return "", errors.New("invalid request data")
-	}
-	return ps.repository.AddHealthConstant(request)
 }
 
 func NewPatientService (repo repository.PatientRepository) PatientService {

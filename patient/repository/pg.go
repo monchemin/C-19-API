@@ -35,10 +35,20 @@ func (r repository) AddHealthConstant(constant model.HealthConstantRequest) (str
 	return insertID, err
 }
 
-func (r repository) Patient(predicate string) (PatientResult, error) {
-	panic("implement me")
+func (r repository) Patient(predicate string) ([]PatientResult, error) {
+	if len(predicate) == 0 {
+		return nil, errors.New("invalid predicate")
+	}
+	var result []PatientResult
+	err := r.db.Select(&result, getPatient, predicate)
+	return  result, err
 }
 
-func (r repository) HealthConstant(predicate string) (HealthConstantResult, error) {
-	panic("implement me")
+func (r repository) HealthConstant(predicate string) ([]HealthConstantResult, error) {
+	if len(predicate) == 0 {
+		return nil, errors.New("invalid predicate")
+	}
+	var result []HealthConstantResult
+	err := r.db.Select(&result, getPatientHealthConstants, predicate)
+	return  result, err
 }

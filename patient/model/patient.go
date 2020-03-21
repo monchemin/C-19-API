@@ -1,5 +1,7 @@
 package model
 
+import "time"
+
 type Patient struct {
 	ID              string           `json:"ID"`
 	PhoneNumber     string           `json:"phone_number"`
@@ -39,7 +41,7 @@ type HealthConstantRequest struct {
 
 type HealthConstant struct {
 	PatientID            string  `json:"patient_id"`
-	DateTime             string  `json:"patient_id"`
+	DateTime             time.Time  `json:"patient_id"`
 	Temperature          float64 `json:"temperature"`
 	IsTired              bool    `json:"is_tired"`
 	HasDryCough          bool    `json:"has_dry_cough"`
