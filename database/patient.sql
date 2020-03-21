@@ -12,7 +12,7 @@ CREATE TABLE common.patient (
 	has_lung_disease boolean NULL DEFAULT false,
 	has_kidney_disease boolean NULL DEFAULT false,
 	is_smoker boolean NULL DEFAULT false,
-	is_returns_from_travel boolean NULL DEFAULT false,
+	is_return_from_travel boolean NULL DEFAULT false,
 	longitude double precision NOT NULL,
 	latitude double precision NOT NULL,
 	created_at timestamptz NOT NULL DEFAULT now(),

@@ -6,7 +6,7 @@ CREATE TABLE common.health_constant (
 	has_dry_cough boolean NOT NULL,
 	has_shortness_of_breath boolean NOT NULL,
 	has_headache boolean NOT NULL,
-	has_ranny_nose boolean NOT NULL,
+	has_runny_nose boolean NOT NULL,
 	has_nasal_congestion boolean NOT NULL,
 	has_sore_throat boolean NOT NULL,
 	has_muscle_pain boolean NOT NULL,
