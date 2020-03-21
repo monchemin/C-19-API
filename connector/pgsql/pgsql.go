@@ -36,10 +36,16 @@ func Open() (*DB, error) {
 }
 
 func OpenWithConfig(config Config) (*DB, error) {
-	connectionString := fmt.Sprintf("host=%s port=%s user=%s password=%s sslmode=disable",
-		config.HostName, config.Port, config.UserName, config.Password)
+	connectionString := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		config.HostName, config.Port, config.UserName, config.Password, config.DataBaseName)
 
+	println(connectionString)
 	connection := sqlx.MustOpen("postgres", connectionString)
+	err := connection.Ping()
+	if err != nil {
+		panic(err)
+	}
+
 
 	return &DB{connection}, nil
 }
