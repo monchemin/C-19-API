@@ -2,21 +2,22 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE common.patient (
-	patient_id uuid NOT NULL DEFAULT uuid_generate_v4(),
+	id uuid NOT NULL DEFAULT common.uuid_generate_v4(),
 	phone_number varchar NOT NULL,
-	age int NULL,
-	is_diabetic boolean NULL DEFAULT false,
-	is_hypertensive boolean NULL DEFAULT false,
-	is_asthmastic boolean NULL DEFAULT false,
-	is_cardio_ischemic boolean NULL DEFAULT false,
-	has_lung_disease boolean NULL DEFAULT false,
-	has_kidney_disease boolean NULL DEFAULT false,
-	is_smoker boolean NULL DEFAULT false,
-	is_return_from_travel boolean NULL DEFAULT false,
-	longitude double precision NOT NULL,
-	latitude double precision NOT NULL,
+	age int4 NULL,
+	weight float8 NULL,
+	is_diabetic bool NULL DEFAULT false,
+	is_hypertensive bool NULL DEFAULT false,
+	is_asthmatic bool NULL DEFAULT false,
+	is_cardio_ischemic bool NULL DEFAULT false,
+	has_lung_disease bool NULL DEFAULT false,
+	has_kidney_disease bool NULL DEFAULT false,
+	is_smoker bool NULL DEFAULT false,
+	is_return_from_travel bool NULL DEFAULT false,
 	created_at timestamptz NOT NULL DEFAULT now(),
-	CONSTRAINT patient_pk PRIMARY KEY (patient_id),
+	longitude float8 NOT NULL,
+	latitude float8 NOT NULL,
+	CONSTRAINT patient_pk PRIMARY KEY (id),
 	CONSTRAINT patient_un UNIQUE (phone_number)
 );
 
