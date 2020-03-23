@@ -14,7 +14,8 @@ const (
 			is_smoker, 
 			is_return_from_travel,
 			longitude, 
-			latitude)
+			latitude,
+			district_id)
 	VALUES(
 			:phonenumber, 
 			:age,
@@ -28,7 +29,8 @@ const (
 			:issmoker, 
 			:isreturnfromtravel, 
 			:longitude,
-			:latitude) 
+			:latitude,
+			:districtid) 
 	RETURNING id`
 
 	insertNewConstant = `INSERT INTO common.health_constant(

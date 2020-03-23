@@ -14,6 +14,7 @@ type PatientRequest struct {
 	IsReturnFromTravel bool    `json:"is_return_from_travel"`
 	Longitude          float64 `json:"longitude"`
 	Latitude           float64 `json:"latitude"`
+	DistrictID         string  `json:"district_id"`
 }
 
 type HealthConstantRequest struct {
@@ -32,7 +33,7 @@ type HealthConstantRequest struct {
 }
 
 func (pr *PatientRequest) IsValid() bool {
-	return len(pr.PhoneNumber) > 0 && pr.Age > 0
+	return len(pr.PhoneNumber) > 0 && pr.Age > 0 && len(pr.DistrictID) > 0
 }
 
 func (h *HealthConstantRequest) IsValid() bool {
