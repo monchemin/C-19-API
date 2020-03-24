@@ -1,11 +1,13 @@
 package handler
 
 import (
+	"c19/connector/es"
 	"c19/connector/pgsql"
 	"c19/patient/repository"
 	"c19/patient/service"
 	repository2 "c19/position/repository"
 	service2 "c19/position/service"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,9 +24,9 @@ type handler struct {
 	positionService service2.PositionService
 }
 
-func Setup(router *gin.Engine, pg *pgsql.DB) *gin.Engine {
+func Setup(router *gin.Engine, pg *pgsql.DB, esClient es.ElasticSearchClient) *gin.Engine {
 	patientRepository := repository.NewPatientRepository(pg)
-	patientService := service.NewPatientService(patientRepository)
+	patientService := service.NewPatientService(patientRepository, esClient)
 	positionRepository := repository2.NewPositionRepository(pg)
 	positionService := service2.NewPositionService(positionRepository)
 	handler := handler{

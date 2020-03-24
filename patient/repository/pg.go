@@ -41,8 +41,9 @@ func (r repository) Patient(predicate string) ([]PatientResult, error) {
 		return nil, errors.New("invalid predicate")
 	}
 	var result []PatientResult
+
 	err := r.db.Select(&result, getPatient, predicate)
-	return  result, err
+	return result, err
 }
 
 func (r repository) HealthConstant(predicate string) ([]HealthConstantResult, error) {
@@ -52,5 +53,5 @@ func (r repository) HealthConstant(predicate string) ([]HealthConstantResult, er
 	}
 	var result []HealthConstantResult
 	err := r.db.Select(&result, getPatientHealthConstants, predicate)
-	return  result, err
+	return result, err
 }

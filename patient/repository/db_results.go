@@ -18,6 +18,12 @@ type PatientResult struct {
 	Longitude          float64   `db:"longitude"`
 	Latitude           float64   `db:"latitude"`
 	CreatedAt          time.Time `db:"created_at"`
+	DistrictID         string    `db:"district_id"`
+	DistrictName       string    `db:"district_name"`
+	TownID             string    `db:"town_id"`
+	TownName           string    `db:"town_name"`
+	CountryCode        string    `db:"country_code"`
+	CountryName        string    `db:"country_name"`
 }
 
 type HealthConstantResult struct {

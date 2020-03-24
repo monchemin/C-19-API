@@ -61,7 +61,21 @@ const (
 							:hasdiarrhea)
 					RETURNING id`
 
-	getPatient = `SELECT p.* FROM common.patient p WHERE p.phone_number = $1`
+	getPatient = `SELECT p.*, d.name as "district_name", d.town_id, t.name as "town_name", c.id as "country_code", c.name as "country_name"
+				FROM common.patient p
+				inner join common.district d on d.id = p.district_id
+				inner join common.town t on t.id = d.town_id 
+				inner join common.country c on c.id = t.country_id
+ 				WHERE p.phone_number = $1 OR p.id::TEXT = $1`
+
+	getPatientById = `SELECT p.* FROM common.patient p WHERE p.id = $1::uuid`
 
 	getPatientHealthConstants = `SELECT hc.* FROM common.health_constant hc WHERE hc.patient_id = $1 ORDER BY hc.date_time DESC`
+)
+
+type Search int
+
+const (
+	ID Search = iota
+	PHONE
 )
