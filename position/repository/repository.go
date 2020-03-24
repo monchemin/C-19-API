@@ -11,6 +11,10 @@ type PositionRepository interface {
 	NewTown(request model.TownRequest) (string, error)
 
 	NewDistrict(request model.DistrictRequest) (string, error)
+
+	Countries() ([]model.Country, error)
+
+	Localisations() ([]model.Localisation, error)
 }
 
 type repository struct {

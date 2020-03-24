@@ -60,3 +60,23 @@ func (h *handler) NewDistrict(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, m.CreationResponse{ID: id})
 }
+
+func (h *handler) Countries(c *gin.Context) {
+	countries, err := h.positionService.Countries()
+	if err != nil {
+		log.Println(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, countries)
+}
+
+func (h *handler) Localisations(c *gin.Context) {
+	localisations, err := h.positionService.Localisations()
+	if err != nil {
+		log.Println(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, localisations)
+}

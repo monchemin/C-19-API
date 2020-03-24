@@ -1,16 +1,20 @@
 package service
 
 import (
-	"c19/position/model"
+	. "c19/position/model"
 	"c19/position/repository"
 )
 
 type PositionService interface {
-	NewCountry(request model.CountryRequest) error
+	NewCountry(request CountryRequest) error
 
-	NewTown(request model.TownRequest) (string, error)
+	NewTown(request TownRequest) (string, error)
 
-	NewDistrict(request model.DistrictRequest) (string, error)
+	NewDistrict(request DistrictRequest) (string, error)
+
+	Countries()([]Country, error)
+
+	Localisations()([]Localisation, error)
 }
 
 type positionService struct {

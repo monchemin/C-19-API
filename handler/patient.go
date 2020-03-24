@@ -59,3 +59,20 @@ func (h *handler) NewHealthConstant(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, model.CreationResponse{ID: id})
 }
+
+func (h *handler) Connexion(c *gin.Context) {
+	var request model.GetRequest
+	if err := c.ShouldBindJSON(&request); err != nil {
+		log.Println(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	connection, err := h.patientService.Connect(request.PhoneNumber)
+	if err != nil {
+		log.Println(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, connection)
+}

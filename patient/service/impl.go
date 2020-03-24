@@ -108,3 +108,14 @@ func (ps *patientService) PatientHealthConstants(predicate string) (model.Patien
 	patient.HealthConstants = healthConstants
 	return patient, nil
 }
+
+func (ps *patientService) Connect(phoneNumber string)(model.Login, error) {
+	p, err := ps.Patient(phoneNumber)
+	if err != nil {
+		return model.Login{}, err
+	}
+	return model.Login{
+		ID:          p.ID,
+		PhoneNumber: p.PhoneNumber,
+	}, nil
+}

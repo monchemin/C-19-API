@@ -5,7 +5,7 @@ CREATE TABLE common.country (
 );
 
 CREATE TABLE common.town (
-	id uuid NOT NULL DEFAULT common.uuid_generate_v4(),
+	id uuid NOT NULL DEFAULT uuid_generate_v4(),
 	"name" varchar NOT NULL,
 	country_id int NULL,
 	CONSTRAINT town_pk PRIMARY KEY (id),
@@ -14,7 +14,7 @@ CREATE TABLE common.town (
 
 
 CREATE TABLE common.district (
-	id uuid NOT NULL DEFAULT common.uuid_generate_v4(),
+	id uuid NOT NULL DEFAULT uuid_generate_v4(),
 	"name" varchar NOT NULL,
 	town_id uuid NOT NULL,
 	CONSTRAINT district_pk PRIMARY KEY (id),

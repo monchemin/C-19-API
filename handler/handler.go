@@ -18,6 +18,8 @@ type Handler interface {
 	NewCountry(c *gin.Context)
 	NewTown(c *gin.Context)
 	NewDistrict(c *gin.Context)
+	Countries(c *gin.Context)
+	Localisations(c *gin.Context)
 }
 type handler struct {
 	patientService  service.PatientService
@@ -33,15 +35,21 @@ func Setup(router *gin.Engine, pg *pgsql.DB, esClient es.ElasticSearchClient) *g
 		patientService:  patientService,
 		positionService: positionService,
 	}
+	patientRouter := router.Group("/patient")
+	{
+		patientRouter.POST("/add", handler.NewPatient)
+		patientRouter.POST("/read", handler.ReadPatient)
+		patientRouter.POST("/connect", handler.Connexion)
+		patientRouter.POST("/constant/add", handler.NewHealthConstant)
+	}
 
-	router.POST("/patient/add", handler.NewPatient)
-	router.POST("/patient/read", handler.ReadPatient)
-	router.POST("/constant/add", handler.NewHealthConstant)
 	routerPosition := router.Group("/position")
 	{
 		routerPosition.POST("/country/add", handler.NewCountry)
 		routerPosition.POST("/town/add", handler.NewTown)
 		routerPosition.POST("/district/add", handler.NewDistrict)
+		routerPosition.GET("/countries", handler.Countries)
+		routerPosition.GET("/localisations", handler.Localisations)
 	}
 	return router
 }

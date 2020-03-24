@@ -45,3 +45,8 @@ type HealthConstant struct {
 type CreationResponse struct {
 	ID string
 }
+
+type Login struct {
+	ID          string `json:"id"`
+	PhoneNumber string `json:"phone_number"`
+}
