@@ -1,10 +1,12 @@
 package service
 
 import (
-	"c19/connector/es"
-	"c19/patient/model"
 	"encoding/json"
 	"errors"
+	"github.com/mmcloughlin/geohash"
+
+	"c19/connector/es"
+	"c19/patient/model"
 )
 
 func (ps *patientService) Add(request model.PatientRequest) (string, error) {
@@ -29,7 +31,7 @@ func (ps *patientService) AddHealthConstant(request model.HealthConstantRequest)
 	cData := string(constantJson)
 	doc := es.Document{
 		ID:    ID,
-		Index: "patient",
+		Index: "patient_health_constant",
 		Json:  cData[:len(cData)-1] + "," + pData[1:],
 	}
 
@@ -63,6 +65,7 @@ func (ps *patientService) Patient(predicate string) (model.Patient, error) {
 		IsReturnFromTravel: patientInfo.IsReturnFromTravel,
 		Longitude:          patientInfo.Longitude,
 		Latitude:           patientInfo.Latitude,
+		Localisation:        geohash.Encode(patientInfo.Latitude, patientInfo.Longitude),
 		CreatedAt:          patientInfo.CreatedAt,
 		DistrictID:         patientInfo.DistrictID,
 		DistrictName:       patientInfo.DistrictName,
@@ -109,7 +112,7 @@ func (ps *patientService) PatientHealthConstants(predicate string) (model.Patien
 	return patient, nil
 }
 
-func (ps *patientService) Connect(phoneNumber string)(model.Login, error) {
+func (ps *patientService) Connect(phoneNumber string) (model.Login, error) {
 	p, err := ps.Patient(phoneNumber)
 	if err != nil {
 		return model.Login{}, err
