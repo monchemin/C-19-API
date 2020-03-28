@@ -30,6 +30,7 @@ type HealthConstantRequest struct {
 	HasSoreThroat                      bool    `json:"has_sore_throat"`
 	HasMusclePain                      bool    `json:"has_muscle_pain"`
 	HasDiarrhea                        bool    `json:"has_diarrhea"`
+	DateTime                           string  `json:"date_time"`
 }
 
 func (pr *PatientRequest) IsValid() bool {

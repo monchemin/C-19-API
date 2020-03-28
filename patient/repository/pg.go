@@ -21,19 +21,19 @@ func (r repository) NewPatient(patient model.PatientRequest) (string, error) {
 	return insertID, err
 }
 
-func (r repository) AddHealthConstant(constant model.HealthConstantRequest) (string, error) {
+func (r repository) AddHealthConstant(constant model.HealthConstantRequest) (string, string, error) {
 	if !constant.IsValid() {
-		return "", errors.New("invalid data")
+		return "", "", errors.New("invalid data")
 	}
 	row, err := r.db.NamedQuery(insertNewConstant, constant)
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
-	var insertID string
+	var insertID, dt string
 	if row.Next() {
-		row.Scan(&insertID)
+		row.Scan(&insertID, &dt)
 	}
-	return insertID, err
+	return insertID, dt, err
 }
 
 func (r repository) Patient(predicate string) ([]PatientResult, error) {

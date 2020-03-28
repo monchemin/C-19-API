@@ -1,12 +1,10 @@
 package service
 
 import (
-	"encoding/json"
-	"errors"
-	"github.com/mmcloughlin/geohash"
-
 	"c19/connector/es"
 	"c19/patient/model"
+	"encoding/json"
+	"errors"
 )
 
 func (ps *patientService) Add(request model.PatientRequest) (string, error) {
@@ -20,10 +18,11 @@ func (ps *patientService) AddHealthConstant(request model.HealthConstantRequest)
 	if !request.IsValid() {
 		return "", errors.New("invalid request data")
 	}
-	ID, err := ps.repository.AddHealthConstant(request)
+	ID, DT, err := ps.repository.AddHealthConstant(request)
 	if err != nil {
 		return "", err
 	}
+	request.DateTime = DT
 	patient, _ := ps.Patient(request.PatientID)
 	patientJson, err := json.Marshal(patient)
 	constantJson, err := json.Marshal(request)
@@ -31,7 +30,7 @@ func (ps *patientService) AddHealthConstant(request model.HealthConstantRequest)
 	cData := string(constantJson)
 	doc := es.Document{
 		ID:    ID,
-		Index: "patientConstants",
+		Index: "patientconstants",
 		Json:  cData[:len(cData)-1] + "," + pData[1:],
 	}
 
@@ -65,7 +64,7 @@ func (ps *patientService) Patient(predicate string) (model.Patient, error) {
 		IsReturnFromTravel: patientInfo.IsReturnFromTravel,
 		Longitude:          patientInfo.Longitude,
 		Latitude:           patientInfo.Latitude,
-		Localization:       geoPointConverter(patientInfo.Latitude, patientInfo.Longitude),
+		Localization:       ps.geoPointConverter(patientInfo.Latitude, patientInfo.Longitude),
 		CreatedAt:          patientInfo.CreatedAt,
 		DistrictID:         patientInfo.DistrictID,
 		DistrictName:       patientInfo.DistrictName,
@@ -123,9 +122,9 @@ func (ps *patientService) Connect(phoneNumber string) (model.Login, error) {
 	}, nil
 }
 
-func (ps *patientService) geoPointConverter (latitude float64, longitude float64) (model.GeoPoint) {
+func (ps *patientService) geoPointConverter (latitude float64, longitude float64) model.GeoPoint {
 	return model.GeoPoint {
 		Lon: longitude,
-		Lat: latitude
+		Lat: latitude,
 	}
 }

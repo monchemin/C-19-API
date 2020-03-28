@@ -59,7 +59,7 @@ const (
 							:hassorethroat,
 							:hasmusclepain,
 							:hasdiarrhea)
-					RETURNING id`
+					RETURNING id, date_time`
 
 	getPatient = `SELECT p.*, d.name as "district_name", d.town_id, t.name as "town_name", c.id as "country_code", c.name as "country_name"
 				FROM common.patient p

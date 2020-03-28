@@ -6,6 +6,7 @@ import (
 	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/elastic/go-elasticsearch/v8/esapi"
 	"github.com/google/uuid"
+	"log"
 	"strings"
 )
 
@@ -45,6 +46,7 @@ func (ec elasticSearchClient) Insert(document Document, coercedId bool) error {
 		DocumentID: document.ID,
 		Body:       strings.NewReader(document.Json),
 	}
-	_, err := req.Do(context.Background(), ec.es)
+	res, err := req.Do(context.Background(), ec.es)
+	log.Println(res)
 	return err
 }

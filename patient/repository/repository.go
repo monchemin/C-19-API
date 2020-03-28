@@ -9,7 +9,7 @@ type PatientRepository interface {
 	//Add new patient return insert ID (uuid) as string or error
 	NewPatient(patient model.PatientRequest) (string, error)
 	//Add new constant return insert ID (uuid) as string or error
-	AddHealthConstant(constant model.HealthConstantRequest) (string, error)
+	AddHealthConstant(constant model.HealthConstantRequest) (string, string, error)
 	//retrieve patient info base on ID or phone number both as string
 	Patient(predicate string) ([]PatientResult, error)
 	//retrieve patient's health constant info base on ID or phone number both as string

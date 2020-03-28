@@ -18,7 +18,7 @@ type Patient struct {
 	Longitude          float64          `json:"longitude"`
 	Latitude           float64          `json:"latitude"`
 	Localization       GeoPoint         `json:"lat_lon"`
-	CreatedAt          time.Time        `db:"created_at"`
+	CreatedAt          time.Time        `json:"created_at"`
 	DistrictID         string           `json:"district_id"`
 	DistrictName       string           `json:"district_name"`
 	TownID             string           `json:"town_id"`
