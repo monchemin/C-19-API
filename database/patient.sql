@@ -17,6 +17,8 @@ CREATE TABLE common.patient (
 	created_at timestamptz NOT NULL DEFAULT now(),
 	longitude float8 NOT NULL,
 	latitude float8 NOT NULL,
+	district_id uuid NOT NULL,
+	gender varchar(1) NULL,
 	CONSTRAINT patient_pk PRIMARY KEY (id),
 	CONSTRAINT patient_un UNIQUE (phone_number)
 );

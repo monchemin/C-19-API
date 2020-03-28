@@ -72,6 +72,7 @@ func (ps *patientService) Patient(predicate string) (model.Patient, error) {
 		TownName:           patientInfo.TownName,
 		CountryCode:        patientInfo.CountryCode,
 		CountryName:        patientInfo.CountryName,
+		Gender:             patientInfo.Gender,
 	}
 
 	return patient, nil
