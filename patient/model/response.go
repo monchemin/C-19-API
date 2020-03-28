@@ -25,6 +25,7 @@ type Patient struct {
 	TownName           string           `json:"town_name"`
 	CountryCode        string           `json:"country_code"`
 	CountryName        string           `json:"country_name"`
+	Gender             string           `json:"gender"`
 	HealthConstants    []HealthConstant `json:"health_constants"`
 }
 
