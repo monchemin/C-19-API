@@ -17,7 +17,7 @@ type District struct {
 	Name string `json:"name"`
 }
 
-type Localisation struct {
+type Localization struct {
 	ID       string `json:"id" db:"id"`
 	Position string `json:"position" db:"position"`
 	Country  string `json:"country" db:"code"`

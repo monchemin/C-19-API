@@ -14,7 +14,7 @@ type PositionService interface {
 
 	Countries()([]Country, error)
 
-	Localisations()([]Localisation, error)
+	Localizations()([]Localization, error)
 }
 
 type positionService struct {

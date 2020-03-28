@@ -31,7 +31,7 @@ func (ps *patientService) AddHealthConstant(request model.HealthConstantRequest)
 	cData := string(constantJson)
 	doc := es.Document{
 		ID:    ID,
-		Index: "patient_health_constant",
+		Index: "patientConstants",
 		Json:  cData[:len(cData)-1] + "," + pData[1:],
 	}
 
@@ -65,7 +65,7 @@ func (ps *patientService) Patient(predicate string) (model.Patient, error) {
 		IsReturnFromTravel: patientInfo.IsReturnFromTravel,
 		Longitude:          patientInfo.Longitude,
 		Latitude:           patientInfo.Latitude,
-		Localisation:        geohash.Encode(patientInfo.Latitude, patientInfo.Longitude),
+		Localization:        geohash.Encode(patientInfo.Latitude, patientInfo.Longitude),
 		CreatedAt:          patientInfo.CreatedAt,
 		DistrictID:         patientInfo.DistrictID,
 		DistrictName:       patientInfo.DistrictName,

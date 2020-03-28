@@ -49,8 +49,8 @@ func (r repository) Countries() ([]model.Country, error) {
 	return result, err
 }
 
-func (r repository) Localisations() ([]model.Localisation, error) {
-	var result []model.Localisation
-	err := r.db.Select(&result, getLocalisations)
+func (r repository) Localizations() ([]model.Localization, error) {
+	var result []model.Localization
+	err := r.db.Select(&result, getLocalizations)
 	return result, err
 }

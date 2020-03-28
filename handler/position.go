@@ -71,12 +71,12 @@ func (h *handler) Countries(c *gin.Context) {
 	c.JSON(http.StatusOK, countries)
 }
 
-func (h *handler) Localisations(c *gin.Context) {
-	localisations, err := h.positionService.Localisations()
+func (h *handler) Localizations(c *gin.Context) {
+	localizations, err := h.positionService.Localizations()
 	if err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, localisations)
+	c.JSON(http.StatusOK, Response{Data:localizations})
 }

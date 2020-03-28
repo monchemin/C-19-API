@@ -33,6 +33,6 @@ func (p positionService) Countries() ([]Country, error) {
 	return p.repository.Countries()
 }
 
-func (p positionService) Localisations() ([]Localisation, error) {
-	return p.repository.Localisations()
+func (p positionService) Localizations() ([]Localization, error) {
+	return p.repository.Localizations()
 }

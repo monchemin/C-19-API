@@ -19,7 +19,7 @@ type Handler interface {
 	NewTown(c *gin.Context)
 	NewDistrict(c *gin.Context)
 	Countries(c *gin.Context)
-	Localisations(c *gin.Context)
+	Localizations(c *gin.Context)
 }
 type handler struct {
 	patientService  service.PatientService
@@ -49,7 +49,7 @@ func Setup(router *gin.Engine, pg *pgsql.DB, esClient es.ElasticSearchClient) *g
 		routerPosition.POST("/town/add", handler.NewTown)
 		routerPosition.POST("/district/add", handler.NewDistrict)
 		routerPosition.GET("/countries", handler.Countries)
-		routerPosition.GET("/localisations", handler.Localisations)
+		routerPosition.GET("/localizations", handler.Localizations)
 	}
 	return router
 }

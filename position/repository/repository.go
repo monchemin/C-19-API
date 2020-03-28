@@ -14,7 +14,7 @@ type PositionRepository interface {
 
 	Countries() ([]model.Country, error)
 
-	Localisations() ([]model.Localisation, error)
+	Localizations() ([]model.Localization, error)
 }
 
 type repository struct {
