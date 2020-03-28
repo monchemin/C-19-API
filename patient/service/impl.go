@@ -65,7 +65,7 @@ func (ps *patientService) Patient(predicate string) (model.Patient, error) {
 		IsReturnFromTravel: patientInfo.IsReturnFromTravel,
 		Longitude:          patientInfo.Longitude,
 		Latitude:           patientInfo.Latitude,
-		Localization:        geohash.Encode(patientInfo.Latitude, patientInfo.Longitude),
+		Localization:       LatLonConverter(patientInfo.Latitude, patientInfo.Longitude),
 		CreatedAt:          patientInfo.CreatedAt,
 		DistrictID:         patientInfo.DistrictID,
 		DistrictName:       patientInfo.DistrictName,
@@ -121,4 +121,11 @@ func (ps *patientService) Connect(phoneNumber string) (model.Login, error) {
 		ID:          p.ID,
 		PhoneNumber: p.PhoneNumber,
 	}, nil
+}
+
+func (ps *patientService) LatLonConverter (latitude float64, longitude float64) (model.Localization) {
+	return model.Localization {
+		Lon: longitude,
+		Lat: latitude
+	}
 }

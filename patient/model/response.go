@@ -17,7 +17,7 @@ type Patient struct {
 	IsReturnFromTravel bool             `json:"is_return_from_travel"`
 	Longitude          float64          `json:"longitude"`
 	Latitude           float64          `json:"latitude"`
-	Localization       string           `json:"lat_lon"`
+	Localization       Localization     `json:"lat_lon"`
 	CreatedAt          time.Time        `db:"created_at"`
 	DistrictID         string           `json:"district_id"`
 	DistrictName       string           `json:"district_name"`
@@ -50,4 +50,9 @@ type CreationResponse struct {
 type Login struct {
 	ID          string `json:"id"`
 	PhoneNumber string `json:"phone_number"`
+}
+
+type Localization struct {
+	Lon float64 `json:"lon"`
+	Lat float64 `json:"lat"`
 }
