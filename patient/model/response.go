@@ -17,7 +17,7 @@ type Patient struct {
 	IsReturnFromTravel bool             `json:"is_return_from_travel"`
 	Longitude          float64          `json:"longitude"`
 	Latitude           float64          `json:"latitude"`
-	Localization       Localization     `json:"lat_lon"`
+	Localization       GeoPoint         `json:"lat_lon"`
 	CreatedAt          time.Time        `db:"created_at"`
 	DistrictID         string           `json:"district_id"`
 	DistrictName       string           `json:"district_name"`
@@ -52,7 +52,7 @@ type Login struct {
 	PhoneNumber string `json:"phone_number"`
 }
 
-type Localization struct {
+type GeoPoint struct {
 	Lon float64 `json:"lon"`
 	Lat float64 `json:"lat"`
 }
