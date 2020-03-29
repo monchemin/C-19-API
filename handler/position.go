@@ -4,7 +4,6 @@ import (
 	"log"
 	"net/http"
 
-	m "c19/patient/model"
 	"c19/position/model"
 
 	"github.com/gin-gonic/gin"
@@ -41,7 +40,7 @@ func (h *handler) NewTown(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, m.CreationResponse{ID: id})
+	c.JSON(http.StatusOK, Response{ID: id})
 }
 
 func (h *handler) NewDistrict(c *gin.Context) {
@@ -58,7 +57,7 @@ func (h *handler) NewDistrict(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, m.CreationResponse{ID: id})
+	c.JSON(http.StatusOK, Response{ID: id})
 }
 
 func (h *handler) Countries(c *gin.Context) {
@@ -68,7 +67,7 @@ func (h *handler) Countries(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, countries)
+	c.JSON(http.StatusOK, Response{Data: countries})
 }
 
 func (h *handler) Localizations(c *gin.Context) {
@@ -78,5 +77,5 @@ func (h *handler) Localizations(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, Response{Data:localizations})
+	c.JSON(http.StatusOK, Response{Data: localizations})
 }

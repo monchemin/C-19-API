@@ -1,9 +1,10 @@
 package model
 
 type Country struct {
-	ID    string `json:"id"`
-	Name  string `json:"name"`
-	Towns []Town `json:"towns"`
+	ID      string `json:"id"`
+	Name    string `json:"name"`
+	ISOCode string `json:"iso_code"`
+	Towns   []Town `json:"towns"`
 }
 
 type Town struct {

@@ -113,18 +113,19 @@ func (ps *patientService) PatientHealthConstants(predicate string) (model.Patien
 }
 
 func (ps *patientService) Connect(phoneNumber string) (model.Login, error) {
-	p, err := ps.Patient(phoneNumber)
+	p, err := ps.PatientHealthConstants(phoneNumber)
 	if err != nil {
 		return model.Login{}, err
 	}
 	return model.Login{
-		ID:          p.ID,
-		PhoneNumber: p.PhoneNumber,
+		ID:               p.ID,
+		PhoneNumber:      p.PhoneNumber,
+		DailyInformation: p.HealthConstants,
 	}, nil
 }
 
-func (ps *patientService) geoPointConverter (latitude float64, longitude float64) model.GeoPoint {
-	return model.GeoPoint {
+func (ps *patientService) geoPointConverter(latitude float64, longitude float64) model.GeoPoint {
+	return model.GeoPoint{
 		Lon: longitude,
 		Lat: latitude,
 	}

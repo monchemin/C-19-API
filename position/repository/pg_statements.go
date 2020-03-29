@@ -10,7 +10,7 @@ const (
 					VALUES(:name, :townid) 
 					RETURNING id`
 
-	getCountries = `SELECT * FROM common.country`
+	getCountries = `SELECT id, name FROM common.country`
 
 	getLocalizations = `SELECT d.id, c.id as "code", CONCAT(c.name, ' ', t.name, ' ', d.name) as position
 						from common.district d

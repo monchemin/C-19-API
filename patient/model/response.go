@@ -49,8 +49,9 @@ type CreationResponse struct {
 }
 
 type Login struct {
-	ID          string `json:"id"`
-	PhoneNumber string `json:"phone_number"`
+	ID               string           `json:"id"`
+	PhoneNumber      string           `json:"phone_number"`
+	DailyInformation []HealthConstant `json:"daily_information"`
 }
 
 type GeoPoint struct {
