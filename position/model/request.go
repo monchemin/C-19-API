@@ -3,8 +3,9 @@ package model
 import "strconv"
 
 type CountryRequest struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	ID        string `json:"id"`
+	Name      string `json:"name"`
+	IsoCode   string `json:"iso_code"`
 }
 
 func (c *CountryRequest) IsValid() bool {
@@ -12,6 +13,9 @@ func (c *CountryRequest) IsValid() bool {
 		return false
 	}
 	if len(c.Name) == 0 {
+		return false
+	}
+	if len(c.IsoCode) == 0 {
 		return false
 	}
 	return true

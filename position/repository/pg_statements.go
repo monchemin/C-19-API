@@ -1,8 +1,8 @@
 package repository
 
 const (
-	insertNewCountry = `INSERT INTO common.country(id, name)
-					VALUES(:id, :name)`
+	insertNewCountry = `INSERT INTO common.country(id, name, iso_code)
+					VALUES(:id, :name, :isocode)`
 	insertNewTown = `INSERT INTO common.town(name, country_id)
 					VALUES(:name, :countryid) 
 					RETURNING id`
