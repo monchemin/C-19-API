@@ -31,23 +31,23 @@ func (p positionService) NewDistrict(request DistrictRequest) (string, error) {
 
 func (p positionService) Countries() ([]Country, error) {
 	countryInfos, err := p.repository.Countries()
-	if (err != nil) {
+	if err != nil {
 		return nil, err
-	} else {
-		var countries[]Country
-		if len(countryInfos) == 0 {
-			return nil, errors.EmptyResultData()
-		} else {
-			for index, info := range countryInfos {
-				countries[index] = Country{
-					ID:            info.ID,
-					Name:          info.Name,
-					IsoCode:       info.IsoCode,
-				}
-			}
-			return countries, err// p.repository.Countries()
+	}
+
+	if len(countryInfos) == 0 {
+		return nil, errors.EmptyResultData()
+	}
+
+	countries := make([]Country, len(countryInfos))
+	for index, info := range countryInfos {
+		countries[index] = Country{
+			ID:      info.ID,
+			Name:    info.Name,
+			IsoCode: info.IsoCode,
 		}
 	}
+	return countries, err
 }
 
 func (p positionService) Localizations() ([]Localization, error) {
