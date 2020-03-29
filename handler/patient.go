@@ -23,7 +23,7 @@ func (h *handler) NewPatient(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, model.CreationResponse{ID: id})
+	c.JSON(http.StatusOK, Response{ID: id})
 }
 
 func (h *handler) ReadPatient(c *gin.Context) {
@@ -40,7 +40,7 @@ func (h *handler) ReadPatient(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, patient)
+	c.JSON(http.StatusOK, Response{Data:patient})
 }
 
 func (h *handler) NewHealthConstant(c *gin.Context) {
@@ -57,7 +57,7 @@ func (h *handler) NewHealthConstant(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, model.CreationResponse{ID: id})
+	c.JSON(http.StatusOK, Response{ID: id})
 }
 
 func (h *handler) Connexion(c *gin.Context) {
@@ -74,5 +74,5 @@ func (h *handler) Connexion(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, connection)
+	c.JSON(http.StatusOK, Response{Data:connection})
 }
