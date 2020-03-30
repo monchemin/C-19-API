@@ -12,7 +12,7 @@ type PositionRepository interface {
 
 	NewDistrict(request model.DistrictRequest) (string, error)
 
-	Countries() ([]model.Country, error)
+	Countries() ([]CountryResult, error)
 
 	Localizations() ([]model.Localization, error)
 }

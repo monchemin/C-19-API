@@ -25,6 +25,8 @@ type PatientResult struct {
 	CountryCode        string    `db:"country_code"`
 	CountryName        string    `db:"country_name"`
 	Gender             string    `db:"gender"`
+	TownLongitude      float64    `db:"town_longitude"`
+	TownLatitude       float64    `db:"town_latitude"`
 }
 
 type HealthConstantResult struct {
