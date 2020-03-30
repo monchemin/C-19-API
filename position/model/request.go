@@ -22,8 +22,10 @@ func (c *CountryRequest) IsValid() bool {
 }
 
 type TownRequest struct {
-	Name     string `json:"name"`
-	CountryID string `json:"country_id"`
+	Name        string `json:"name"`
+	Longitude   float64 `json:"longitude"`
+	Latitude    float64 `json:"latitude"`
+	CountryID   string `json:"country_id"`
 }
 
 func (c *TownRequest) IsValid() bool {
