@@ -43,8 +43,8 @@ func (r repository) NewDistrict(request model.DistrictRequest) (string, error) {
 	return ID, err
 }
 
-func (r repository) Countries() ([]model.Country, error) {
-	var result []model.Country
+func (r repository) Countries() ([]CountryResult, error) {
+	var result []CountryResult
 	err := r.db.Select(&result, getCountries)
 	return result, err
 }
