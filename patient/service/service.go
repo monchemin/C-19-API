@@ -14,7 +14,7 @@ type PatientService interface {
 	//retrieve patient info
 	Patient(predicate string) (model.Patient, error)
 	//retrieve patient info and constant
-	PatientHealthConstants(predicate string) (model.Patient, error)
+	PatientHealthConstants(predicate string) ([]model.HealthConstant, error)
 	// connect exist patient
 	Connect(phoneNumber string)(model.Login, error)
 }

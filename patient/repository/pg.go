@@ -46,6 +46,16 @@ func (r repository) Patient(predicate string) ([]PatientResult, error) {
 	return result, err
 }
 
+func (r repository) Connect(predicate string) ([]PatientResult, error) {
+	if len(predicate) == 0 {
+		return nil, errors.New("invalid predicate")
+	}
+	var result []PatientResult
+
+	err := r.db.Select(&result, getPatientConnection, predicate)
+	return result, err
+}
+
 func (r repository) HealthConstant(predicate string) ([]HealthConstantResult, error) {
 	log.Println(predicate)
 	if len(predicate) == 0 {

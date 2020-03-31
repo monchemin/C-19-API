@@ -72,7 +72,7 @@ const (
 				inner join common.country c on c.id = t.country_id
  				WHERE p.phone_number = $1 OR p.id::TEXT = $1`
 
-	getPatientById = `SELECT p.* FROM common.patient p WHERE p.id = $1::uuid`
+	getPatientConnection = `SELECT id, phone_number FROM common.patient p WHERE p.phone_number = $1 OR p.id::TEXT = $1`
 
 	getPatientHealthConstants = `SELECT hc.* FROM common.health_constant hc WHERE hc.patient_id = $1 ORDER BY hc.date_time DESC`
 )
