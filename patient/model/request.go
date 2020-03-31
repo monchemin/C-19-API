@@ -16,6 +16,9 @@ type PatientRequest struct {
 	Latitude           float64 `json:"latitude"`
 	DistrictID         string  `json:"district_id"`
 	Gender             string  `json:"gender"`
+	IsAtRisk           bool    `json:"is_at_risk"`
+	ShouldBeTested     bool    `json:"should_be_tested"`
+	IsTested           bool    `json:"is_tested"`
 }
 
 type HealthConstantRequest struct {

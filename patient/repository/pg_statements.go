@@ -16,7 +16,10 @@ const (
 			longitude, 
 			latitude,
 			district_id,
-		    gender)
+			gender,
+			is_at_risk,
+			should_be_tested,
+		    is_tested)
 	VALUES(
 			:phonenumber, 
 			:age,
@@ -32,7 +35,10 @@ const (
 			:longitude,
 			:latitude,
 			:districtid,
-			:gender) 
+			:gender,
+			:isatrisk,
+			:shouldbetested,
+			:istested) 
 	RETURNING id`
 
 	insertNewConstant = `INSERT INTO common.health_constant(
