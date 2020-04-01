@@ -24,6 +24,7 @@ type PatientResult struct {
 	TownName           string    `db:"town_name"`
 	CountryCode        string    `db:"country_code"`
 	CountryName        string    `db:"country_name"`
+	CountryIsoCode     string    `db:"iso_code"`
 	Gender             string    `db:"gender"`
 	TownLongitude      float64   `db:"town_longitude"`
 	TownLatitude       float64   `db:"town_latitude"`

@@ -71,7 +71,7 @@ const (
 
 	getPatient = `SELECT p.*, d.name as "district_name", d.town_id, 
 	            t.name as "town_name", t.longitude as "town_longitude", t.latitude as "town_latitude",
-	            c.id as "country_code", c.name as "country_name"
+	            c.id as "country_code", c.name as "country_name", c.iso_code as "iso_code"
 				FROM common.patient p
 				inner join common.district d on d.id = p.district_id
 				inner join common.town t on t.id = d.town_id 
