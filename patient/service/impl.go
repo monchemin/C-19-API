@@ -72,8 +72,12 @@ func (ps *patientService) Patient(predicate string) (model.Patient, error) {
 		TownName:           patientInfo.TownName,
 		CountryCode:        patientInfo.CountryCode,
 		CountryName:        patientInfo.CountryName,
+		CountryIsoCode:     patientInfo.CountryIsoCode,
 		Gender:             patientInfo.Gender,
 		TownLocalization:   ps.geoPointConverter(patientInfo.TownLatitude, patientInfo.TownLongitude),
+		IsAtRisk:           patientInfo.IsAtRisk,
+		ShouldBeTested:     patientInfo.ShouldBeTested,
+		IsTested:           patientInfo.IsTested,
 	}
 
 	return patient, nil

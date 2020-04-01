@@ -25,8 +25,12 @@ type Patient struct {
 	TownName           string           `json:"town_name"`
 	CountryCode        string           `json:"country_code"`
 	CountryName        string           `json:"country_name"`
+	CountryIsoCode     string           `json:"country_iso_code"`
 	Gender             string           `json:"gender"`
 	TownLocalization   GeoPoint         `json:"town_lat_lon"`
+	IsAtRisk           bool             `json:"is_at_risk"`
+	ShouldBeTested     bool             `json:"should_be_tested"`
+	IsTested           bool             `json:"is_tested"`
 	HealthConstants    []HealthConstant `json:"health_constants"`
 }
 

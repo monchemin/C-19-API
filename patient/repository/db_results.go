@@ -24,9 +24,13 @@ type PatientResult struct {
 	TownName           string    `db:"town_name"`
 	CountryCode        string    `db:"country_code"`
 	CountryName        string    `db:"country_name"`
+	CountryIsoCode     string    `db:"iso_code"`
 	Gender             string    `db:"gender"`
-	TownLongitude      float64    `db:"town_longitude"`
-	TownLatitude       float64    `db:"town_latitude"`
+	TownLongitude      float64   `db:"town_longitude"`
+	TownLatitude       float64   `db:"town_latitude"`
+	IsAtRisk           bool      `db:"is_at_risk"`
+	ShouldBeTested     bool      `db:"should_be_tested"`
+	IsTested           bool      `db:"is_tested"`
 }
 
 type HealthConstantResult struct {
