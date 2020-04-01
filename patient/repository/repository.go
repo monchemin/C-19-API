@@ -14,6 +14,8 @@ type PatientRepository interface {
 	Patient(predicate string) ([]PatientResult, error)
 	//retrieve patient's health constant info base on ID or phone number both as string
 	HealthConstant(predicate string) ([]HealthConstantResult, error)
+
+	Connect(predicate string) ([]PatientResult, error)
 }
 
 type repository struct {

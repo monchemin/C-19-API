@@ -79,18 +79,12 @@ func (ps *patientService) Patient(predicate string) (model.Patient, error) {
 	return patient, nil
 }
 
-func (ps *patientService) PatientHealthConstants(predicate string) (model.Patient, error) {
-	patient, err := ps.Patient(predicate)
-	if err != nil {
-		return model.Patient{}, err
-	}
-	if patient.ID == "" {
-		return model.Patient{}, nil
-	}
-	constantInfos, err := ps.repository.HealthConstant(patient.ID)
+func (ps *patientService) PatientHealthConstants(patientID string) ([]model.HealthConstant, error) {
+
+	constantInfos, err := ps.repository.HealthConstant(patientID)
 
 	if err != nil {
-		return model.Patient{}, err
+		return nil, err
 	}
 	healthConstants := make([]model.HealthConstant, len(constantInfos))
 	for index, info := range constantInfos {
@@ -109,19 +103,24 @@ func (ps *patientService) PatientHealthConstants(predicate string) (model.Patien
 			HasDiarrhea:          info.HasDiarrhea,
 		}
 	}
-	patient.HealthConstants = healthConstants
-	return patient, nil
+
+	return healthConstants, nil
 }
 
 func (ps *patientService) Connect(phoneNumber string) (model.Login, error) {
-	p, err := ps.PatientHealthConstants(phoneNumber)
+	result, err := ps.repository.Connect(phoneNumber)
 	if err != nil {
 		return model.Login{}, err
 	}
+	if result == nil {
+		return model.Login{}, err
+	}
+	connection := result[0]
+	hc, _ := ps.PatientHealthConstants(connection.ID)
 	return model.Login{
-		ID:               p.ID,
-		PhoneNumber:      p.PhoneNumber,
-		DailyInformation: p.HealthConstants,
+		ID:               connection.ID,
+		PhoneNumber:      connection.PhoneNumber,
+		DailyInformation: hc,
 	}, nil
 }
 
