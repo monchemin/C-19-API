@@ -31,6 +31,9 @@ type PatientResult struct {
 	IsAtRisk           bool      `db:"is_at_risk"`
 	ShouldBeTested     bool      `db:"should_be_tested"`
 	IsTested           bool      `db:"is_tested"`
+	Height             float64   `db:"height"`
+	IsAtRiskDate       time.Time `db:"is_at_risk_date"`
+	IsInfectedDate     time.Time `db:"is_infected_date"`
 }
 
 type HealthConstantResult struct {

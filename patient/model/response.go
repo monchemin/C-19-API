@@ -31,6 +31,9 @@ type Patient struct {
 	IsAtRisk           bool             `json:"is_at_risk"`
 	ShouldBeTested     bool             `json:"should_be_tested"`
 	IsTested           bool             `json:"is_tested"`
+	Height             float64          `json:"height"`
+	IsAtRiskDate       time.Time        `json:"is_at_risk_date"`
+	IsInfectedDate     time.Time        `json:"is_infected_date"`
 	HealthConstants    []HealthConstant `json:"health_constants"`
 }
 
