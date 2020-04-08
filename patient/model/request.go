@@ -16,6 +16,7 @@ type PatientRequest struct {
 	Latitude           float64 `json:"latitude"`
 	DistrictID         string  `json:"district_id"`
 	Gender             string  `json:"gender"`
+	Height             float64 `json:"height"`
 }
 
 type HealthConstantRequest struct {
@@ -35,7 +36,7 @@ type HealthConstantRequest struct {
 }
 
 func (pr *PatientRequest) IsValid() bool {
-	return len(pr.PhoneNumber) > 0 && pr.Age > 0 && len(pr.DistrictID) > 0 && (pr.Gender == "M" || pr.Gender == "F")
+	return len(pr.PhoneNumber) > 0 && pr.Age > 0 && len(pr.DistrictID) > 0 && (pr.Gender == "M" || pr.Gender == "F") && pr.Height > 0 && pr.Height <= 250
 }
 
 func (h *HealthConstantRequest) IsValid() bool {

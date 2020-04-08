@@ -78,6 +78,11 @@ func (ps *patientService) Patient(predicate string) (model.Patient, error) {
 		IsAtRisk:           patientInfo.IsAtRisk,
 		ShouldBeTested:     patientInfo.ShouldBeTested,
 		IsTested:           patientInfo.IsTested,
+		Height:             patientInfo.Height,
+		AtRiskDate:         patientInfo.AtRiskDate,
+		InfectedDate:       patientInfo.InfectedDate,
+		HealingDate:        patientInfo.HealingDate,
+		DeathDate:          patientInfo.DeathDate,
 	}
 
 	return patient, nil
