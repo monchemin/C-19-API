@@ -3,6 +3,7 @@ package jwt
 import (
 	"errors"
 	"github.com/dgrijalva/jwt-go"
+	"os"
 	"time"
 )
 
@@ -16,7 +17,7 @@ const (
 	expireOffset  = 3600
 )
 
-var jwtKey = []byte("alafiawincovid")
+var jwtKey = []byte(os.Getenv("TOKEN_KEY"))
 
 // input userID as string
 // output signed token and and error

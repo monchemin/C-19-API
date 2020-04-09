@@ -7,10 +7,14 @@ import (
 )
 
 type SecurityService interface {
-	CreateUser(ctx context.Context, request model.UserCreateRequest) error
-	CanManage(ctx context.Context, resourceID string) bool
-	CanWrite(ctx context.Context, resourceID string) bool
-	CanRead(ctx context.Context, resourceID string) bool
+	CreateUser(ctx context.Context, request model.UserCreateRequest) string
+	Login(request model.LoginRequest) (model.LoginResponse, error)
+	ChangePassword(ctx context.Context, request model.LoginRequest) error
+	Logout(ctx context.Context)
+
+	CanManage(ctx context.Context) bool
+	CanWrite(ctx context.Context) bool
+	CanRead(ctx context.Context) bool
 }
 
 type securityService struct {
