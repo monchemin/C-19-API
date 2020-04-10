@@ -16,6 +16,8 @@ require (
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
+	github.com/stretchr/testify v1.4.0
+	github.com/vektra/mockery v0.0.0-20181123154057-e78b021dcbb5 // indirect
 	golang.org/x/crypto v0.0.0-20200406173513-056763e48d71
 	golang.org/x/sys v0.0.0-20200321134203-328b4cd54aae // indirect
 	google.golang.org/appengine v1.6.5 // indirect
