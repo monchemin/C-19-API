@@ -7,7 +7,7 @@ import (
 )
 
 type SecurityService interface {
-	CreateUser(ctx context.Context, request model.UserCreateRequest) string
+	CreateUser(ctx context.Context, request model.UserCreateRequest) (string, error)
 	Login(request model.LoginRequest) (model.LoginResponse, error)
 	ChangePassword(ctx context.Context, request model.LoginRequest) error
 	Logout(ctx context.Context)

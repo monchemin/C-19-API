@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"golang.org/x/crypto/bcrypt"
 
 	appContext "c19/context"
 	"c19/errors"
@@ -9,22 +10,30 @@ import (
 	"c19/security/model"
 )
 
-func (s securityService) CreateUser(ctx context.Context, request model.UserCreateRequest) string {
-	if ok := s.CanManage(ctx); !ok {
-		return ""
+func (ss securityService) CreateUser(ctx context.Context, request model.UserCreateRequest) (string, error) {
+	if ok := ss.CanManage(ctx); !ok {
+		return "", errors.Unauthorized()
 	}
 	if !request.IsValid() {
-		return ""
+		return "", errors.InvalidRequestData()
 	}
-	return s.repository.CreateUser(request)
+	claims, err := parseJwt(ctx)
+	if err != nil {
+		return "", err
+	}
+	hashPass, _ := hashPassword(request.Password)
+	request.Password = hashPass
+	request.CreatedBy = claims.UserID
+	return ss.repository.CreateUser(request)
 }
 
-func (s securityService) Login(request model.LoginRequest) (model.LoginResponse, error) {
+func (ss securityService) Login(request model.LoginRequest) (model.LoginResponse, error) {
 	if !request.HasValidLogin() {
 		return model.LoginResponse{}, errors.InvalidRequestData()
 	}
-
-	result := s.repository.Login(request)
+	hashPass, _ := hashPassword(request.Password)
+	request.Password = hashPass
+	result := ss.repository.Login(request)
 	if len(result.ID) == 0 {
 		return model.LoginResponse{}, errors.InvalidRequestData()
 	}
@@ -34,28 +43,38 @@ func (s securityService) Login(request model.LoginRequest) (model.LoginResponse,
 		return model.LoginResponse{}, errors.InvalidRequestData()
 	}
 
-	if err = s.repository.StartSession(tokenString); err != nil {
+	if err = ss.repository.StartSession(tokenString); err != nil {
 		return model.LoginResponse{}, errors.InvalidRequestData()
 	}
 
 	return model.LoginResponse{Token: tokenString}, nil
 }
 
-func (s securityService) ChangePassword(ctx context.Context, request model.LoginRequest) error {
+func (ss securityService) ChangePassword(ctx context.Context, request model.LoginRequest) error {
 	if !request.HasValidPasswordChange() {
 		return errors.InvalidRequestData()
 	}
 
-	ctxValues := appContext.ContextKeys(ctx)
-	claims, err := jwt.ParseToken(ctxValues.Token)
+	claims, err := parseJwt(ctx)
 	if err != nil {
 		return err
 	}
-
-	return s.repository.ChangePassword(claims.UserID, request.NewPassword)
+	hashOldPass, _ := hashPassword(request.Password)
+	hashNewPass, _ := hashPassword(request.NewPassword)
+	return ss.repository.ChangePassword(claims.UserID, hashOldPass, hashNewPass)
 }
 
-func (s securityService) Logout(ctx context.Context) {
+func (ss securityService) Logout(ctx context.Context) {
 	ctxValues := appContext.ContextKeys(ctx)
-	s.repository.EndSession(ctxValues.Token)
+	ss.repository.EndSession(ctxValues.Token)
+}
+
+func hashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	return string(bytes), err
+}
+
+func parseJwt(ctx context.Context) (*jwt.Claims, error) {
+	ctxValues := appContext.ContextKeys(ctx)
+	return jwt.ParseToken(ctxValues.Token)
 }

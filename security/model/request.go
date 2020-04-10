@@ -8,6 +8,7 @@ type UserCreateRequest struct {
 	PhoneNumber string `json:"phone_number"`
 	FirstName   string `json:"phone_number"`
 	LastName    string `json:"phone_number"`
+	CreatedBy   string `json:"created_by"`
 }
 
 var rxEmail = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
@@ -17,6 +18,9 @@ func (us *UserCreateRequest) IsValid() bool {
 		return false
 	}
 	if len(us.Password) < 5 {
+		return false
+	}
+	if len(us.FirstName) == 0 || len(us.LastName) == 0 {
 		return false
 	}
 	return true

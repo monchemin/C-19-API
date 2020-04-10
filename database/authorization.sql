@@ -8,6 +8,8 @@ CREATE TABLE common."user" (
 	first_name varchar NOT NULL,
 	last_name varchar NOT NULL,
 	active bool NULL DEFAULT true,
+	created_at timestamptz NOT NULL DEFAULT now(),
+	created_by uuid NULL,
 	CONSTRAINT user_pk PRIMARY KEY (id),
 	CONSTRAINT user_un UNIQUE (email)
 );
