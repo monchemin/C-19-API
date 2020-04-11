@@ -33,8 +33,8 @@ func (ps *patientService) AddHealthConstant(request model.HealthConstantRequest)
 		Index: "patientconstants",
 		Json:  cData[:len(cData)-1] + "," + pData[1:],
 	}
-
-	return ID, ps.esClient.Insert(doc, true)
+	_ = ps.esClient.Insert(doc, true)
+	return ID, nil
 }
 
 func (ps *patientService) Patient(predicate string) (model.Patient, error) {
