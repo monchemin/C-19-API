@@ -16,6 +16,13 @@ type PatientRepository interface {
 	HealthConstant(predicate string) ([]HealthConstantResult, error)
 
 	Connect(predicate string) ([]PatientResult, error)
+
+	//constant that have not indexed in es service
+	NotIndexedConstants() ([]HealthConstantResult, error)
+	//get patient list from id list
+	InPatient(patientIds ...string) ([]PatientResult, error)
+
+	IndexedConstant(state bool, message string) error
 }
 
 type repository struct {
@@ -23,5 +30,5 @@ type repository struct {
 }
 
 func NewPatientRepository(db *pgsql.DB) PatientRepository {
-	return repository{db:db}
+	return repository{db: db}
 }

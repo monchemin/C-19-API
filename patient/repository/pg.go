@@ -3,7 +3,7 @@ package repository
 import (
 	"c19/patient/model"
 	"errors"
-	"log"
+	"github.com/jmoiron/sqlx"
 )
 
 func (r repository) NewPatient(patient model.PatientRequest) (string, error) {
@@ -57,11 +57,35 @@ func (r repository) Connect(predicate string) ([]PatientResult, error) {
 }
 
 func (r repository) HealthConstant(predicate string) ([]HealthConstantResult, error) {
-	log.Println(predicate)
 	if len(predicate) == 0 {
 		return nil, errors.New("invalid predicate")
 	}
 	var result []HealthConstantResult
 	err := r.db.Select(&result, getPatientHealthConstants, predicate)
 	return result, err
+}
+
+func (r repository) NotIndexedConstants() ([]HealthConstantResult, error) {
+	var result []HealthConstantResult
+	err := r.db.Select(&result, notIndexedConstants)
+	return result, err
+}
+
+func (r repository) InPatient(patientIds ...string) ([]PatientResult, error) {
+	if len(patientIds) == 0 {
+		return nil, errors.New("invalid list")
+	}
+	var result []PatientResult
+	query, args, err := sqlx.In(InPatient, patientIds)
+	if err != nil {
+		return nil, err
+	}
+	query = r.db.Rebind(query)
+	err = r.db.Select(&result, query, args...)
+	return result, err
+}
+
+func (r repository) IndexedConstant(state bool, message string) error {
+	_, err := r.db.Query(InsertIndexedDate, state, message)
+	return err
 }

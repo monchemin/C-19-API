@@ -1,13 +1,11 @@
 package main
 
 import (
-	"os"
-
 	"c19/connector/es"
 	"c19/connector/pgsql"
-	"c19/handler"
-
-	"github.com/gin-gonic/gin"
+	"c19/patient/repository"
+	"c19/patient/service"
+	"os"
 )
 
 func main() {
@@ -21,11 +19,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	patientRepository := repository.NewPatientRepository(pg)
+	patientService := service.NewPatientService(patientRepository, esClient)
+	patientService.IndexConstants()
 
-
-	router := gin.Default()
-	router = handler.Setup(router, pg, esClient)
-	if err := router.Run(":8080"); err != nil {
-		panic(err)
-	}
 }

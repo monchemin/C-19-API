@@ -77,6 +77,20 @@ const (
 	getPatientConnection = `SELECT id, phone_number FROM common.patient p WHERE p.phone_number = $1 OR p.id::TEXT = $1`
 
 	getPatientHealthConstants = `SELECT hc.* FROM common.health_constant hc WHERE hc.patient_id = $1 ORDER BY hc.date_time DESC`
+
+	notIndexedConstants = `SELECT * FROM common.health_constant hc 
+					WHERE hc.date_time >= (SELECT MAX(date_time) FROM common.indexed_constants where completed = true)`
+
+	InPatient = `SELECT p.*, d.name as "district_name", d.town_id, 
+	            t.name as "town_name", t.longitude as "town_longitude", t.latitude as "town_latitude",
+	            c.id as "country_code", c.name as "country_name", c.iso_code as "iso_code"
+				FROM common.patient p
+				inner join common.district d on d.id = p.district_id
+				inner join common.town t on t.id = d.town_id 
+				inner join common.country c on c.id = t.country_id
+ 				WHERE p.id::TEXT IN (?)`
+
+	InsertIndexedDate = `INSERT INTO common.indexed_constants (completed, error)  Values($1, $2)`
 )
 
 type Search int
