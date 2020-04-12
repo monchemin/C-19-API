@@ -9,16 +9,22 @@ const (
 							last_name,
 							created_by)
 					VALUES(	:email,
-							:phone_number,
+							:phonenumber,
 							:password ,
-							:first_name,
-							:last_name,
-							:created_by)
+							:firstname,
+							:lastname,
+							:createdby)
 					RETURNING id`
 
-	userByEmail = `SELECT id, first_name, last_name FROM common.user WHERE e_mail = $1 AND password = $2`
+	userByEmail = `SELECT id, password, first_name, last_name FROM common.user WHERE email = $1`
 
-	userByID = `SELECT e_mail, first_name, last_name FROM common.user WHERE id = $1 AND password = $2`
+	userByID = `SELECT email, first_name, last_name, active FROM common.user WHERE id = $1`
 
 	changePassword = `UPDATE common.user SET  password = $2 WHERE id = $1`
+
+	userPrivileges = `SELECT r.code, r.name FROM common.role r
+						INNER JOIN common.privilege p ON r.id = p.role_id
+						WHERE p.user_id::TEXT = $1 and p.resource_id::TEXT = $2`
+
+
 )

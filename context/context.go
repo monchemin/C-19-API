@@ -7,7 +7,7 @@ type KeyReference string
 const (
 	UserIDKey = KeyReference("UserID")
 	ResourceIDKey = KeyReference("ResourceID")
-	TokenKey = KeyReference("ResourceID")
+	TokenKey = KeyReference("TokenKey")
 )
 
 type Values struct {
@@ -28,8 +28,8 @@ func ContextKeys(ctx context.Context)(data Values) {
 		data.ResourceID = rawResourceID
 	}
 
-	if token, ok := ctx.Value(ResourceIDKey).(string); ok {
-		data.Token = token
+	if rawToken, ok := ctx.Value(TokenKey).(string); ok {
+		data.Token = rawToken
 	}
 
 	return

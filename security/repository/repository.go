@@ -10,8 +10,10 @@ type SecurityRepository interface {
 	CreateUser(request model.UserCreateRequest) (string, error)
 	Login(request model.LoginRequest) LoginResult
 	StartSession(sessionID string) error
-	ChangePassword(userID, oldPassword, newPassword string) error
+	ChangePassword(userID, newPassword string) error
 	EndSession(sessionID string)
+	UserByID(userID string) LoginResult
+	UserPrivileges(userID, resourceID string) []PrivilegeResult
 }
 
 type repository struct {

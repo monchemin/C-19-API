@@ -7,6 +7,8 @@ import (
 	"c19/patient/service"
 	repository2 "c19/position/repository"
 	service2 "c19/position/service"
+	repository3 "c19/security/repository"
+	service3 "c19/security/service"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,6 +26,7 @@ type Handler interface {
 type handler struct {
 	patientService  service.PatientService
 	positionService service2.PositionService
+	securityService service3.SecurityService
 }
 
 func Setup(router *gin.Engine, pg *pgsql.DB, esClient es.ElasticSearchClient) *gin.Engine {
@@ -31,9 +34,12 @@ func Setup(router *gin.Engine, pg *pgsql.DB, esClient es.ElasticSearchClient) *g
 	patientService := service.NewPatientService(patientRepository, esClient)
 	positionRepository := repository2.NewPositionRepository(pg)
 	positionService := service2.NewPositionService(positionRepository)
+	securityRepository := repository3.NewSecurityRepository(pg)
+	securityService := service3.NewSecurityService(securityRepository)
 	handler := handler{
 		patientService:  patientService,
 		positionService: positionService,
+		securityService: securityService,
 	}
 	patientRouter := router.Group("/patient")
 	{
@@ -50,6 +56,12 @@ func Setup(router *gin.Engine, pg *pgsql.DB, esClient es.ElasticSearchClient) *g
 		routerPosition.POST("/district/add", handler.NewDistrict)
 		routerPosition.GET("/countries", handler.Countries)
 		routerPosition.GET("/localizations", handler.Localizations)
+	}
+
+	routerAdmin := router.Group("/admin")
+	{
+		routerAdmin.POST("/login", handler.Login)
+		routerAdmin.POST("/user", handler.CreateUser)
 	}
 	return router
 }

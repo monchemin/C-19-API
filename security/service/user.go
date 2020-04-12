@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"golang.org/x/crypto/bcrypt"
 
 	appContext "c19/context"
 	"c19/errors"
@@ -31,16 +30,15 @@ func (ss securityService) Login(request model.LoginRequest) (model.LoginResponse
 	if !request.HasValidLogin() {
 		return model.LoginResponse{}, errors.InvalidRequestData()
 	}
-	hashPass, _ := hashPassword(request.Password)
-	request.Password = hashPass
 	result := ss.repository.Login(request)
-	if len(result.ID) == 0 {
-		return model.LoginResponse{}, errors.InvalidRequestData()
+
+	if len(result.ID) == 0 || comparePassword(result.Password, request.Password) != nil {
+		return model.LoginResponse{}, errors.Unauthorized()
 	}
 
-	tokenString, err := jwt.GenerateToken(result.ID)
+	tokenString, err := jwt.GenerateToken(result.ID, request.Email)
 	if err != nil {
-		return model.LoginResponse{}, errors.InvalidRequestData()
+		return model.LoginResponse{}, errors.Unknown()
 	}
 
 	if err = ss.repository.StartSession(tokenString); err != nil {
@@ -54,27 +52,20 @@ func (ss securityService) ChangePassword(ctx context.Context, request model.Logi
 	if !request.HasValidPasswordChange() {
 		return errors.InvalidRequestData()
 	}
-
 	claims, err := parseJwt(ctx)
 	if err != nil {
 		return err
 	}
-	hashOldPass, _ := hashPassword(request.Password)
+	result := ss.repository.UserByID(claims.UserID)
+
+	if err = comparePassword(result.Password, request.Password);  err != nil {
+		return err
+	}
 	hashNewPass, _ := hashPassword(request.NewPassword)
-	return ss.repository.ChangePassword(claims.UserID, hashOldPass, hashNewPass)
+	return ss.repository.ChangePassword(claims.UserID, hashNewPass)
 }
 
 func (ss securityService) Logout(ctx context.Context) {
 	ctxValues := appContext.ContextKeys(ctx)
 	ss.repository.EndSession(ctxValues.Token)
-}
-
-func hashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
-	return string(bytes), err
-}
-
-func parseJwt(ctx context.Context) (*jwt.Claims, error) {
-	ctxValues := appContext.ContextKeys(ctx)
-	return jwt.ParseToken(ctxValues.Token)
 }
