@@ -117,14 +117,10 @@ func (r repository) TestResult(predicate string) ([]TestResultResult, error) {
 	return result, err
 }
 
-func (r repository) NewToIndex() ([]string, error) {
-	var result []HealthConstantResult
+func (r repository) NewToIndex() ([]PatientResult, error) {
+	var result []PatientResult
 	err := r.db.Select(&result, newToIndex)
-	response := make([]string, len(result))
-	for i, row := range result {
-		response[i] = row.PatientID
-	}
-	return response, err
+	return result, err
 }
 
 func (r repository) NewConstantToIndex(startDate, endDate time.Time) ([]HealthConstantResult, error) {

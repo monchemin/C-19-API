@@ -29,7 +29,7 @@ type PatientRepository interface {
 
 	TestResult(predicate string) ([]TestResultResult, error)
 
-	NewToIndex() ([]string, error)
+	NewToIndex() ([]PatientResult, error)
 
 	NewConstantToIndex(startDate, endDate time.Time) ([]HealthConstantResult, error)
 
