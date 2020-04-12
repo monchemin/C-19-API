@@ -36,6 +36,7 @@ func (h *handler) CreateUser(c *gin.Context) {
 	}
 	token := c.GetHeader("Authorization")
 	ctx := context.WithValue(context.Background(), appContext.TokenKey, strings.TrimPrefix(token, "Bearer "))
+	ctx = context.WithValue(ctx, appContext.ResourceIDKey, request.ResourceID)
 	connection, err := h.securityService.CreateUser(ctx, request)
 	if err != nil {
 		log.Println(err.Error())

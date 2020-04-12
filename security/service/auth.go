@@ -10,9 +10,9 @@ import (
 )
 
 const (
-	MANAGE = "MA"
-	WRITE  = "WR"
-	READ   = "RE"
+	MANAGE = "M"
+	WRITE  = "W"
+	READ   = "R"
 )
 
 func (ss securityService) CanManage(ctx context.Context) bool {

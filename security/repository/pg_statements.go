@@ -16,6 +16,16 @@ const (
 							:createdby)
 					RETURNING id`
 
+	insertPrivilege = `INSERT INTO common.privilege(
+							user_id,
+							resource_id,
+							resource_type_id,
+							role_id)
+					VALUES(	:userid,
+							:resourceid,
+							:resourcetypeid,
+							:roleid)`
+
 	userByEmail = `SELECT id, password, first_name, last_name FROM common.user WHERE email = $1`
 
 	userByID = `SELECT email, first_name, last_name, active FROM common.user WHERE id = $1`

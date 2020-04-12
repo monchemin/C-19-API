@@ -6,12 +6,20 @@ import (
 )
 
 type UserCreateRequest struct {
-	Email       string `json:"e_mail"`
-	Password    string `json:"password"`
-	PhoneNumber string `json:"phone_number"`
-	FirstName   string `json:"first_name"`
-	LastName    string `json:"last_name"`
-	CreatedBy   string `json:"created_by"`
+	Email       string      `json:"e_mail"`
+	Password    string      `json:"password"`
+	PhoneNumber string      `json:"phone_number"`
+	FirstName   string      `json:"first_name"`
+	LastName    string      `json:"last_name"`
+	CreatedBy   string      `json:"created_by"`
+	ResourceID  string      `json:"resource_id"`
+	Privileges  []Privilege `json:"privileges"`
+}
+
+type Privilege struct {
+	RoleID         int    `json:"role_id"`
+	ResourceTypeID int    `json:"resource_type_id"`
+	ResourceID     string `json:"resource_id"`
 }
 
 var rxEmail = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
