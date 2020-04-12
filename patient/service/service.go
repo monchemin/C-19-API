@@ -19,6 +19,10 @@ type PatientService interface {
 	Connect(phoneNumber string)(model.Login, error)
 
 	IndexConstants()
+	//add new result
+	NewTestResult(request model.TestResultRequest) (string, error)
+	//retrieve patient info and test result
+	PatientTestResult(predicate string) ([]model.TestResult, error)
 
 }
 

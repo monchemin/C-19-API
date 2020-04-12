@@ -47,6 +47,7 @@ func Setup(router *gin.Engine, pg *pgsql.DB, esClient es.ElasticSearchClient) *g
 		patientRouter.POST("/read", handler.ReadPatient)
 		patientRouter.POST("/connect", handler.Connexion)
 		patientRouter.POST("/constant/add", handler.NewHealthConstant)
+		patientRouter.POST("/result/add", handler.NewTestResult)
 	}
 
 	routerPosition := router.Group("/position")

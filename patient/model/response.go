@@ -70,3 +70,12 @@ type GeoPoint struct {
 	Lon float64 `json:"lon"`
 	Lat float64 `json:"lat"`
 }
+
+type TestResult struct {
+	PatientID          string     `json:"patient_id"`
+	TestCode           string     `json:"test_code"`
+	DateTime           time.Time  `json:"date_time"`
+	IsInfected         bool       `json:"is_infected"`
+	IsReinfection      bool       `json:"is_reinfection"`
+	HealthStatus       string     `json:"health_status"`
+}

@@ -89,3 +89,28 @@ func (r repository) IndexedConstant(state bool, message string) error {
 	_, err := r.db.Query(InsertIndexedDate, state, message)
 	return err
 }
+
+func (r repository) NewTestResult(testResult model.TestResultRequest) (string, string, error) {
+	if !testResult.IsValid() {
+		return "", "", errors.New("invalid data")
+	}
+	row, err := r.db.NamedQuery(insertNewTestResult, testResult)
+	if err != nil {
+		return "", "", err
+	}
+	var insertID, dt string
+	if row.Next() {
+		row.Scan(&insertID, &dt)
+	}
+	return insertID, dt, err
+}
+
+func (r repository) TestResult(predicate string) ([]TestResultResult, error) {
+	if len(predicate) == 0 {
+		return nil, errors.New("invalid predicate")
+	}
+	var result []TestResultResult
+
+	err := r.db.Select(&result, getPatientTestResult, predicate)
+	return result, err
+}
