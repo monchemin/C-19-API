@@ -24,6 +24,8 @@ type PatientService interface {
 	//retrieve patient info and test result
 	PatientTestResult(predicate string) ([]model.TestResult, error)
 
+	IndexPatients()
+
 }
 
 type patientService struct {

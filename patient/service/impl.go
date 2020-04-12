@@ -3,12 +3,16 @@ package service
 import (
 	"encoding/json"
 	"errors"
+	"github.com/google/uuid"
 	"log"
+	"time"
 
 	"c19/connector/es"
 	"c19/patient/model"
 	"c19/patient/repository"
 )
+
+const indexationDelta  = 72
 
 func (ps *patientService) Add(request model.PatientRequest) (string, error) {
 	if !request.IsValid() {
@@ -186,6 +190,75 @@ func (ps *patientService) IndexConstants() {
 	err = ps.repository.IndexedConstant(true, "")
 	log.Println(err)
 
+}
+
+func (ps *patientService) IndexPatients() {
+
+	patientIds, err := ps.repository.NewToIndex()
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	endDate := time.Now().UTC()
+	startDate := endDate.Add(time.Duration(-indexationDelta)*time.Hour)
+
+	constants, err := ps.repository.NewConstantToIndex(startDate, endDate)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	patients := make(map[string][]repository.HealthConstantResult)
+	for _, id := range patientIds {
+		patients[id] = nil
+	}
+	for _, hc := range constants {
+		patients[hc.PatientID] = append(patients[hc.PatientID], hc)
+	}
+	patientStatus := make([]repository.RiskStatus, len(patients))
+	index := 0
+	for p, hcs := range patients {
+		isAtRisk := ps.riskStatus(hcs)
+		patientStatus[index] = repository.RiskStatus{ID: uuid.MustParse(p), Status:isAtRisk}
+		index++
+	}
+
+	 err = ps.repository.UpdatePatientStatus(patientStatus...)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	updatedPatients,err := ps.repository.InPatient(patientIds...)
+	for _, rawPatient := range updatedPatients {
+		patient := ps.patientResultToPatient(rawPatient)
+		patientJson, err := json.Marshal(patient)
+		if err != nil {
+			log.Println(err)
+			_ = ps.repository.IndexedConstant(false, err.Error())
+			return
+		}
+		pData := string(patientJson)
+
+			doc := es.Document{
+				ID:    patient.ID,
+				Index: "patients",
+				Json:  pData,
+			}
+			err = ps.esClient.Insert(doc, true)
+			if err != nil {
+				log.Println(err)
+				_ = ps.repository.IndexedConstant(false, err.Error())
+				return
+			}
+		}
+
+	err = ps.repository.IndexedConstant(true, "")
+	log.Println(err)
+
+}
+
+func (ps *patientService) riskStatus([]repository.HealthConstantResult) bool {
+	return false
 }
 
 func (ps *patientService) geoPointConverter(latitude float64, longitude float64) model.GeoPoint {

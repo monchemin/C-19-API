@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"github.com/google/uuid"
 	"time"
 )
 
@@ -65,4 +66,8 @@ type TestResultResult struct {
 	IsInfected         bool       `db:"is_infected"`
 	IsReinfection      bool       `db:"is_reinfection"`
 	HealthStatus       string     `db:"health_status"`
+}
+type RiskStatus struct {
+	ID uuid.UUID
+	Status bool
 }
