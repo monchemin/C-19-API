@@ -86,11 +86,11 @@ func (ps *patientService) NewTestResult(request model.TestResultRequest) (string
 	patientJson, err := json.Marshal(patient)
 	testResultJson, err := json.Marshal(augmentedRequest)
 	pData := string(patientJson)
-	cData := string(testResultJson)
+	trData := string(testResultJson)
 	doc := es.Document{
 		ID:    ID,
 		Index: "patientresults",
-		Json:  cData[:len(cData)-1] + "," + pData[1:],
+		Json:  trData[:len(trData)-1] + "," + pData[1:],
 	}
 	_ = ps.esClient.Insert(doc, true)
 	return ID, nil
