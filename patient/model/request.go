@@ -64,3 +64,8 @@ func (trr *TestResultRequest) IsValid() bool {
 type GetRequest struct {
 	PhoneNumber string `json:"phone_number"`
 }
+
+type GetTestResultByPatientRequest struct {
+	PatientID  string  `json:"patient_id"`
+}
+

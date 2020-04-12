@@ -84,9 +84,9 @@ func (ps *patientService) NewTestResult(request model.TestResultRequest) (string
 	augmentedRequest := ps.augmentTestResultRequestForEs(request)
 	patient, _ := ps.Patient(request.PatientID)
 	patientJson, err := json.Marshal(patient)
-	constantJson, err := json.Marshal(augmentedRequest)
+	testResultJson, err := json.Marshal(augmentedRequest)
 	pData := string(patientJson)
-	cData := string(constantJson)
+	cData := string(testResultJson)
 	doc := es.Document{
 		ID:    ID,
 		Index: "patientresults",
