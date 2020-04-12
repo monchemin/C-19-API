@@ -17,6 +17,9 @@ type PatientService interface {
 	PatientHealthConstants(predicate string) ([]model.HealthConstant, error)
 	// connect exist patient
 	Connect(phoneNumber string)(model.Login, error)
+
+	IndexConstants()
+
 }
 
 type patientService struct {

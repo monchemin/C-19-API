@@ -25,6 +25,11 @@ func Open(urls []string, username, password string) (ElasticSearchClient, error)
 	}
 
 	es, err := elasticsearch.NewClient(config)
+	res, err := es.Info()
+	if err != nil {
+		log.Fatalf("Error getting response: %s", err)
+	}
+	defer res.Body.Close()
 	return &elasticSearchClient{es: es}, err
 }
 
