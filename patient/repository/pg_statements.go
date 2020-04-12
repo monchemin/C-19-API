@@ -91,6 +91,22 @@ const (
  				WHERE p.id::TEXT IN (?)`
 
 	InsertIndexedDate = `INSERT INTO common.indexed_constants (completed, error)  Values($1, $2)`
+
+	insertNewTestResult = `INSERT INTO common.test_result(
+								patient_id,
+								test_code,
+								is_infected ,
+								is_reinfection,
+								health_status
+								)
+						VALUES(	:patientid,
+								:testcode,
+								:isinfected,
+								:isreinfection,
+								:healthstatus)
+						RETURNING id, date_time`
+	
+	getPatientTestResult = `SELECT tr.* FROM common.test_result tr WHERE tr.patient_id = $1 ORDER BY tr.date_time DESC`
 )
 
 type Search int

@@ -56,3 +56,13 @@ type HealthConstantResult struct {
 	HasMusclePain                      bool      `db:"has_muscle_pain"`
 	HasDiarrhea                        bool      `db:"has_diarrhea"`
 }
+
+type TestResultResult struct {
+	ID                 string     `db:"id"`
+	PatientID          string     `db:"patient_id"`
+	TestCode           string     `db:"test_code"`
+	DateTime           time.Time  `db:"date_time"`
+	IsInfected         bool       `db:"is_infected"`
+	IsReinfection      bool       `db:"is_reinfection"`
+	HealthStatus       string     `db:"health_status"`
+}

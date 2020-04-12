@@ -35,6 +35,20 @@ type HealthConstantRequest struct {
 	DateTime                           string  `json:"date_time"`
 }
 
+type TestResultRequest struct {
+	PatientID                          string  `json:"patient_id"`
+	TestCode                           string  `json:"test_code"`
+	DateTime                           string  `json:"date_time"`
+	IsInfected                         bool    `json:"is_infected"`
+	IsReinfection                      bool    `json:"is_reinfection"`
+	HealthStatus                       string  `json:"health_status"`
+	PatientInfected                    string  `json:"patient_infected"`
+	PatientActive                      string  `json:"patient_active"`
+	PatientHealed                      string  `json:"patient_healed"`
+	PatientDead                        string  `json:"patient_dead"`
+	PatientReinfected                  string  `json:"patient_reinfected"`
+}
+
 func (pr *PatientRequest) IsValid() bool {
 	return len(pr.PhoneNumber) > 0 && pr.Age > 0 && len(pr.DistrictID) > 0 && (pr.Gender == "M" || pr.Gender == "F") && pr.Height > 0 && pr.Height <= 250
 }
@@ -43,6 +57,15 @@ func (h *HealthConstantRequest) IsValid() bool {
 	return h.Temperature > 0 && len(h.PatientID) > 0
 }
 
+func (trr *TestResultRequest) IsValid() bool {
+	return trr.HealthStatus == "ACTIVE" || trr.HealthStatus == "HEALED" || trr.HealthStatus == "DEATH"
+}
+
 type GetRequest struct {
 	PhoneNumber string `json:"phone_number"`
 }
+
+type GetTestResultByPatientRequest struct {
+	PatientID  string  `json:"patient_id"`
+}
+

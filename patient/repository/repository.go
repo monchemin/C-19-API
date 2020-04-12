@@ -23,6 +23,10 @@ type PatientRepository interface {
 	InPatient(patientIds ...string) ([]PatientResult, error)
 
 	IndexedConstant(state bool, message string) error
+
+	NewTestResult(testResult model.TestResultRequest) (string, string, error)
+
+	TestResult(predicate string) ([]TestResultResult, error)
 }
 
 type repository struct {

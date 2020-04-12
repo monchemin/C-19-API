@@ -76,3 +76,37 @@ func (h *handler) Connexion(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, Response{Data:connection})
 }
+
+func (h *handler) NewTestResult(c *gin.Context) {
+	var request model.TestResultRequest
+	if err := c.ShouldBindJSON(&request); err != nil {
+		log.Println(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	id, err := h.patientService.NewTestResult(request)
+	if err != nil {
+		log.Println(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, Response{ID: id})
+}
+
+func (h *handler) ReadPatientTestResult(c *gin.Context) {
+	var request model.GetTestResultByPatientRequest
+	if err := c.ShouldBindJSON(&request); err != nil {
+		log.Println(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	patient, err := h.patientService.PatientTestResult(request.PatientID)
+	if err != nil {
+		log.Println(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, Response{Data:patient})
+}

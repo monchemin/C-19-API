@@ -72,6 +72,45 @@ func (ps *patientService) PatientHealthConstants(patientID string) ([]model.Heal
 	return healthConstants, nil
 }
 
+func (ps *patientService) NewTestResult(request model.TestResultRequest) (string, error) {
+	if !request.IsValid() {
+		return "", errors.New("invalid request data")
+	}
+	ID, DT, err := ps.repository.NewTestResult(request)
+	if err != nil {
+		return "", err
+	}
+	request.DateTime = DT
+	augmentedRequest := ps.augmentTestResultRequestForEs(request)
+	patient, _ := ps.Patient(request.PatientID)
+	patientJson, err := json.Marshal(patient)
+	testResultJson, err := json.Marshal(augmentedRequest)
+	pData := string(patientJson)
+	trData := string(testResultJson)
+	doc := es.Document{
+		ID:    ID,
+		Index: "patientresults",
+		Json:  trData[:len(trData)-1] + "," + pData[1:],
+	}
+	_ = ps.esClient.Insert(doc, true)
+	return ID, nil
+}
+
+func (ps *patientService) PatientTestResult(patientID string) ([]model.TestResult, error) {
+
+	testResultInfos, err := ps.repository.TestResult(patientID)
+
+	if err != nil {
+		return nil, err
+	}
+	testResults := make([]model.TestResult, len(testResultInfos))
+	for index, info := range testResultInfos {
+		testResults[index] = ps.TestResultResultToTestResult(info)
+	}
+
+	return testResults, nil
+}
+
 func (ps *patientService) Connect(phoneNumber string) (model.Login, error) {
 	result, err := ps.repository.Connect(phoneNumber)
 	if err != nil {
@@ -210,4 +249,34 @@ func (ps *patientService) ConstantResultToHealthConstant(info repository.HealthC
 		HasMusclePain:        info.HasMusclePain,
 		HasDiarrhea:          info.HasDiarrhea,
 	}
+}
+
+func (ps *patientService) TestResultResultToTestResult(info repository.TestResultResult) model.TestResult {
+
+	return model.TestResult{
+		PatientID:            info.PatientID,
+		TestCode:             info.TestCode,
+		DateTime:             info.DateTime,
+		IsInfected:           info.IsInfected,
+		IsReinfection:        info.IsReinfection,
+		HealthStatus:         info.HealthStatus,
+	}
+}
+
+func (ps *patientService) augmentTestResultRequestForEs(request model.TestResultRequest) model.TestResultRequest {
+
+	switch request.HealthStatus {
+	case "ACTIVE":
+		request.PatientInfected = request.PatientID + "_" + "CONFIRMED"
+		request.PatientActive = request.PatientID + "_" + "ACTIVE"
+		if (request.IsReinfection) {
+			request.PatientReinfected = request.PatientID + "_" + "REINFECTED"
+		}
+	case "HEALED":
+		request.PatientHealed = request.PatientID + "_" + "HEALED"
+	case "DEATH":
+		request.PatientDead = request.PatientID + "_" + "DEATH"
+	}
+
+	return request
 }
