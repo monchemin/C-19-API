@@ -266,6 +266,8 @@ func (ps *patientService) TestResultResultToTestResult(info repository.TestResul
 func (ps *patientService) augmentTestResultRequestForEs(request model.TestResultRequest) model.TestResultRequest {
 
 	switch request.HealthStatus {
+	case "SAFE":
+		request.PatientSafe = request.PatientID + "_" + "SAFE"
 	case "ACTIVE":
 		request.PatientInfected = request.PatientID + "_" + "CONFIRMED"
 		request.PatientActive = request.PatientID + "_" + "ACTIVE"

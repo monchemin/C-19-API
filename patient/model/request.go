@@ -42,6 +42,7 @@ type TestResultRequest struct {
 	IsInfected                         bool    `json:"is_infected"`
 	IsReinfection                      bool    `json:"is_reinfection"`
 	HealthStatus                       string  `json:"health_status"`
+	PatientSafe                        string  `json:"patient_safe"`
 	PatientInfected                    string  `json:"patient_infected"`
 	PatientActive                      string  `json:"patient_active"`
 	PatientHealed                      string  `json:"patient_healed"`
@@ -58,7 +59,7 @@ func (h *HealthConstantRequest) IsValid() bool {
 }
 
 func (trr *TestResultRequest) IsValid() bool {
-	return trr.HealthStatus == "ACTIVE" || trr.HealthStatus == "HEALED" || trr.HealthStatus == "DEATH"
+	return trr.HealthStatus == "SAFE" || trr.HealthStatus == "ACTIVE" || trr.HealthStatus == "HEALED" || trr.HealthStatus == "DEATH"
 }
 
 type GetRequest struct {
