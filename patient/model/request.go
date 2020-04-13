@@ -42,12 +42,12 @@ type TestResultRequest struct {
 	IsInfected                         bool    `json:"is_infected"`
 	IsReinfection                      bool    `json:"is_reinfection"`
 	HealthStatus                       string  `json:"health_status"`
-	PatientSafe                        string  `json:"patient_safe"`
-	PatientInfected                    string  `json:"patient_infected"`
-	PatientActive                      string  `json:"patient_active"`
-	PatientHealed                      string  `json:"patient_healed"`
-	PatientDead                        string  `json:"patient_dead"`
-	PatientReinfected                  string  `json:"patient_reinfected"`
+	PatientSafe                        *string  `json:"patient_safe"`
+	PatientInfected                    *string  `json:"patient_infected"`
+	PatientActive                      *string  `json:"patient_active"`
+	PatientHealed                      *string  `json:"patient_healed"`
+	PatientDead                        *string  `json:"patient_dead"`
+	PatientReinfected                  *string  `json:"patient_reinfected"`
 }
 
 func (pr *PatientRequest) IsValid() bool {
