@@ -3,6 +3,7 @@ package repository
 import (
 	"c19/connector/pgsql"
 	"c19/patient/model"
+	"time"
 )
 
 type PatientRepository interface {
@@ -27,6 +28,12 @@ type PatientRepository interface {
 	NewTestResult(testResult model.TestResultRequest) (string, string, error)
 
 	TestResult(predicate string) ([]TestResultResult, error)
+
+	NewToIndex() ([]PatientResult, error)
+
+	NewConstantToIndex(startDate, endDate time.Time) ([]HealthConstantResult, error)
+
+	UpdatePatientStatus(statuses ...RiskStatus) error
 }
 
 type repository struct {

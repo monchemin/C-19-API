@@ -107,6 +107,14 @@ const (
 						RETURNING id, date_time`
 	
 	getPatientTestResult = `SELECT tr.* FROM common.test_result tr WHERE tr.patient_id = $1 ORDER BY tr.date_time DESC`
+
+	newToIndex = `SELECT DISTINCT p.*  FROM common.patient p INNER JOIN common.health_constant hc on p.id = hc.patient_id
+					WHERE hc.date_time >= (SELECT MAX(date_time) FROM common.indexed_constants where completed = true)`
+
+	newConstantsToIndex = `SELECT * FROM common.health_constant hc 
+					WHERE hc.date_time BETWEEN $1 AND $2`
+
+	patientUpdate = `UPDATE common.patient  SET is_at_risk = :status WHERE id = :id`
 )
 
 type Search int

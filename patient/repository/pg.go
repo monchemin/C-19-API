@@ -4,6 +4,8 @@ import (
 	"c19/patient/model"
 	"errors"
 	"github.com/jmoiron/sqlx"
+	"log"
+	"time"
 )
 
 func (r repository) NewPatient(patient model.PatientRequest) (string, error) {
@@ -113,4 +115,30 @@ func (r repository) TestResult(predicate string) ([]TestResultResult, error) {
 
 	err := r.db.Select(&result, getPatientTestResult, predicate)
 	return result, err
+}
+
+func (r repository) NewToIndex() ([]PatientResult, error) {
+	var result []PatientResult
+	err := r.db.Select(&result, newToIndex)
+	return result, err
+}
+
+func (r repository) NewConstantToIndex(startDate, endDate time.Time) ([]HealthConstantResult, error) {
+	var result []HealthConstantResult
+	log.Println(startDate, endDate)
+	err := r.db.Select(&result, newConstantsToIndex, startDate, endDate)
+	return result, err
+}
+
+func (r repository) UpdatePatientStatus(statuses ...RiskStatus)  error {
+	if len(statuses) == 0 {
+		return errors.New("invalid list")
+	}
+	for _, status := range statuses {
+		_, err := r.db.NamedQuery(patientUpdate, status)
+		if err != nil {
+			return err
+		}
+	}
+	return  nil
 }

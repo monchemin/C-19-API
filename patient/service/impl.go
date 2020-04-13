@@ -1,14 +1,15 @@
 package service
 
 import (
-	"encoding/json"
-	"errors"
-	"log"
-
 	"c19/connector/es"
 	"c19/patient/model"
 	"c19/patient/repository"
+	"encoding/json"
+	"errors"
+	"log"
 )
+
+const indexationDelta = 72
 
 func (ps *patientService) Add(request model.PatientRequest) (string, error) {
 	if !request.IsValid() {
@@ -126,66 +127,6 @@ func (ps *patientService) Connect(phoneNumber string) (model.Login, error) {
 		PhoneNumber:      connection.PhoneNumber,
 		DailyInformation: hc,
 	}, nil
-}
-
-func (ps *patientService) IndexConstants() {
-
-	result, err := ps.repository.NotIndexedConstants()
-	if err != nil {
-		log.Println(err)
-		return
-	}
-
-	constantMap := make(map[string][]repository.HealthConstantResult)
-	for _, hc := range result {
-		constantMap[hc.PatientID] = append(constantMap[hc.PatientID], hc)
-	}
-
-	keys := make([]string, len(constantMap))
-	for key, _ := range constantMap {
-		keys = append(keys, key)
-	}
-	patients, err := ps.repository.InPatient(keys...)
-	if err != nil {
-		log.Println(err)
-		_ = ps.repository.IndexedConstant(false, err.Error())
-		return
-	}
-
-	for _, rawPatient := range patients {
-		patient := ps.patientResultToPatient(rawPatient)
-		values := constantMap[rawPatient.ID]
-		patientJson, err := json.Marshal(patient)
-		if err != nil {
-			log.Println(err)
-			_ = ps.repository.IndexedConstant(false, err.Error())
-			return
-		}
-		pData := string(patientJson)
-		for _, c := range values {
-			constantJson, err := json.Marshal(ps.ConstantResultToHealthConstant(c))
-			if err != nil {
-				log.Println(err)
-				_ = ps.repository.IndexedConstant(false, err.Error())
-				return
-			}
-			cData := string(constantJson)
-			doc := es.Document{
-				ID:    c.ID,
-				Index: "patientconstants",
-				Json:  cData[:len(cData)-1] + "," + pData[1:],
-			}
-			err = ps.esClient.Insert(doc, true)
-			if err != nil {
-				log.Println(err)
-				_ = ps.repository.IndexedConstant(false, err.Error())
-				return
-			}
-		}
-	}
-	err = ps.repository.IndexedConstant(true, "")
-	log.Println(err)
-
 }
 
 func (ps *patientService) geoPointConverter(latitude float64, longitude float64) model.GeoPoint {
