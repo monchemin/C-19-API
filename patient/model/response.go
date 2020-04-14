@@ -72,10 +72,17 @@ type GeoPoint struct {
 }
 
 type TestResult struct {
-	PatientID          string     `json:"patient_id"`
-	TestCode           string     `json:"test_code"`
-	DateTime           time.Time  `json:"date_time"`
-	IsInfected         bool       `json:"is_infected"`
-	IsReinfection      bool       `json:"is_reinfection"`
-	HealthStatus       string     `json:"health_status"`
+	PatientID     string    `json:"patient_id"`
+	TestCode      string    `json:"test_code"`
+	DateTime      time.Time `json:"date_time"`
+	IsInfected    bool      `json:"is_infected"`
+	IsReinfection bool      `json:"is_reinfection"`
+	HealthStatus  string    `json:"health_status"`
+}
+
+type ShortPatient struct {
+	PhoneNumber string `json:"phone_number"`
+	Location    string `json:"location"`
+	Hits        int    `json:"hits"`
+	IsAtRisk    bool   `json:"is_at_risk"`
 }

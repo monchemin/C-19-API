@@ -34,11 +34,14 @@ type PatientRepository interface {
 	NewConstantToIndex(startDate, endDate time.Time) ([]HealthConstantResult, error)
 
 	UpdatePatientStatus(statuses ...RiskStatus) error
+
+	PatientList() ([]PatientListResult, error)
 }
 
 type repository struct {
 	db *pgsql.DB
 }
+
 
 func NewPatientRepository(db *pgsql.DB) PatientRepository {
 	return repository{db: db}

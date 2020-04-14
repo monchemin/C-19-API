@@ -26,6 +26,8 @@ type PatientService interface {
 
 	IndexPatients()
 
+	PatientList() ([]model.ShortPatient, error)
+
 }
 
 type patientService struct {

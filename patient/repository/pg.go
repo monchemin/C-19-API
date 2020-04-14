@@ -4,7 +4,6 @@ import (
 	"c19/patient/model"
 	"errors"
 	"github.com/jmoiron/sqlx"
-	"log"
 	"time"
 )
 
@@ -125,7 +124,6 @@ func (r repository) NewToIndex() ([]PatientResult, error) {
 
 func (r repository) NewConstantToIndex(startDate, endDate time.Time) ([]HealthConstantResult, error) {
 	var result []HealthConstantResult
-	log.Println(startDate, endDate)
 	err := r.db.Select(&result, newConstantsToIndex, startDate, endDate)
 	return result, err
 }
@@ -141,4 +139,10 @@ func (r repository) UpdatePatientStatus(statuses ...RiskStatus)  error {
 		}
 	}
 	return  nil
+}
+
+func (r repository) PatientList() ([]PatientListResult, error) {
+	var result []PatientListResult
+	err := r.db.Select(&result, patientList)
+	return result, err
 }

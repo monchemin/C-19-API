@@ -38,6 +38,10 @@ func (ps *patientService) IndexPatients() {
 		log.Println(err)
 		return
 	}
+	if len(result) == 0 {
+		return
+	}
+
 	patients := make(map[string]repository.PatientResult)
 	for _, row := range result {
 		patients[row.ID] = row
@@ -153,7 +157,6 @@ func (ps *patientService) riskStatus(p repository.PatientResult, hcs []repositor
 	if p.HasKidneyDisease {
 		score += kidneydisease
 	}
-	log.Println(p.ID, score)
 	return score > threshold
 }
 

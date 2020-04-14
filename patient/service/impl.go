@@ -221,3 +221,21 @@ func (ps *patientService) augmentTestResultRequestForEs(request model.TestResult
 
 	return request
 }
+
+func (ps *patientService) PatientList() ([]model.ShortPatient, error) {
+	result, err := ps.repository.PatientList()
+	if err != nil {
+		return nil, err
+	}
+	response := make([]model.ShortPatient, len(result))
+	for i, p := range result{
+		response[i] = model.ShortPatient{
+			PhoneNumber: p.PhoneNumber,
+			Location:    p.Location,
+			Hits:        p.Hits,
+			IsAtRisk:    p.IsAtRisk,
+		}
+	}
+
+	return response, nil
+}

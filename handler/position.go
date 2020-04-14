@@ -79,3 +79,13 @@ func (h *handler) Localizations(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, Response{Data: localizations})
 }
+
+func (h *handler) PatientList(c *gin.Context) {
+	res, err := h.patientService.PatientList()
+	if err != nil {
+		log.Println(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, Response{Data: res})
+}

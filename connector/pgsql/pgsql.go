@@ -27,11 +27,13 @@ func Open() (*DB, error) {
 	}
 
 	return OpenWithConfig(Config{
-		HostName:     hostName,
-		UserName:     userName,
-		Password:     password,
-		Port:         p,
-		DataBaseName: dataBaseName,
+		HostName:          hostName,
+		UserName:          userName,
+		Password:          password,
+		Port:              p,
+		DataBaseName:      dataBaseName,
+		MaxIdleConnection: 3,
+		MaxOpenConnection: 5,
 	})
 }
 
