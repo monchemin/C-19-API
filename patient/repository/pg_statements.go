@@ -94,12 +94,14 @@ const (
 
 	insertNewTestResult = `INSERT INTO common.test_result(
 								patient_id,
+								date_time,
 								test_code,
 								is_infected ,
 								is_reinfection,
 								health_status
 								)
 						VALUES(	:patientid,
+							    :datetime,
 								:testcode,
 								:isinfected,
 								:isreinfection,

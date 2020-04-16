@@ -208,17 +208,23 @@ func (ps *patientService) augmentTestResultRequestForEs(request model.TestResult
 
 	switch request.HealthStatus {
 	case "SAFE":
-		request.PatientSafe = request.PatientID + "_" + "SAFE"
+		safe := request.PatientID + "_" + "SAFE"
+		request.PatientSafe = &safe
 	case "ACTIVE":
-		request.PatientInfected = request.PatientID + "_" + "CONFIRMED"
-		request.PatientActive = request.PatientID + "_" + "ACTIVE"
+		confirmed := request.PatientID + "_" + "CONFIRMED"
+		actif := request.PatientID + "_" + "ACTIVE"
+		reinfected := request.PatientID + "_" + "REINFECTED"
+		request.PatientInfected = &confirmed
+		request.PatientActive = &actif
 		if (request.IsReinfection) {
-			request.PatientReinfected = request.PatientID + "_" + "REINFECTED"
+			request.PatientReinfected = &reinfected
 		}
 	case "HEALED":
-		request.PatientHealed = request.PatientID + "_" + "HEALED"
+		healed := request.PatientID + "_" + "HEALED"
+		request.PatientHealed = &healed
 	case "DEATH":
-		request.PatientDead = request.PatientID + "_" + "DEATH"
+		death := request.PatientID + "_" + "DEATH"
+		request.PatientDead = &death
 	}
 
 	return request
