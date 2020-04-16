@@ -22,8 +22,8 @@ func main() {
 		panic(err)
 	}
 
-
 	router := gin.Default()
+	router.Use(cors.Default())
 	router = handler.Setup(router, pg, esClient)
 	if err := router.Run(":8080"); err != nil {
 		panic(err)
