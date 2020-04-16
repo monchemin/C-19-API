@@ -64,6 +64,7 @@ func Setup(router *gin.Engine, pg *pgsql.DB, esClient es.ElasticSearchClient) *g
 	{
 		routerAdmin.POST("/login", handler.Login)
 		routerAdmin.POST("/user", handler.CreateUser)
+		routerAdmin.GET("/patient-list", handler.PatientList)
 	}
 	return router
 }

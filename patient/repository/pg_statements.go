@@ -117,6 +117,14 @@ const (
 					WHERE hc.date_time BETWEEN $1 AND $2`
 
 	patientUpdate = `UPDATE common.patient  SET is_at_risk = :status WHERE id = :id`
+
+	patientList = `SELECT p.phone_number, p.is_at_risk, count(hc.id) as hits,  CONCAT(c.name, ' ', t.name, ' ', d.name) as position
+						from common.patient p
+						inner join common.district d on d.id = p.district_id 
+						inner join common.town t on t.id = d.town_id 
+						inner join common.country c on c.id = t.country_id 
+						inner join common.health_constant hc on p.id = hc.patient_id 
+						group by p.id, position `
 )
 
 type Search int

@@ -21,6 +21,6 @@ func main() {
 	}
 	patientRepository := repository.NewPatientRepository(pg)
 	patientService := service.NewPatientService(patientRepository, esClient)
-	patientService.IndexConstants()
+	patientService.IndexPatients()
 
 }

@@ -59,15 +59,22 @@ type HealthConstantResult struct {
 }
 
 type TestResultResult struct {
-	ID                 string     `db:"id"`
-	PatientID          string     `db:"patient_id"`
-	TestCode           string     `db:"test_code"`
-	DateTime           time.Time  `db:"date_time"`
-	IsInfected         bool       `db:"is_infected"`
-	IsReinfection      bool       `db:"is_reinfection"`
-	HealthStatus       string     `db:"health_status"`
+	ID            string    `db:"id"`
+	PatientID     string    `db:"patient_id"`
+	TestCode      string    `db:"test_code"`
+	DateTime      time.Time `db:"date_time"`
+	IsInfected    bool      `db:"is_infected"`
+	IsReinfection bool      `db:"is_reinfection"`
+	HealthStatus  string    `db:"health_status"`
 }
 type RiskStatus struct {
-	ID uuid.UUID
+	ID     uuid.UUID
 	Status bool
+}
+
+type PatientListResult struct {
+	PhoneNumber string `db:"phone_number"`
+	Location    string `db:"position"`
+	Hits        int    `db:"hits"`
+	IsAtRisk    bool   `db:"is_at_risk"`
 }
