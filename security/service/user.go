@@ -3,10 +3,10 @@ package service
 import (
 	"context"
 
-	appContext "c19/context"
-	"c19/errors"
-	"c19/security/jwt"
-	"c19/security/model"
+	appContext "github.com/monchemin/C-19-API/context"
+	"github.com/monchemin/C-19-API/errors"
+	"github.com/monchemin/C-19-API/security/jwt"
+	"github.com/monchemin/C-19-API/security/model"
 )
 
 func (ss securityService) CreateUser(ctx context.Context, request model.UserCreateRequest) (string, error) {

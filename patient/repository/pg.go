@@ -1,10 +1,12 @@
 package repository
 
 import (
-	"c19/patient/model"
 	"errors"
-	"github.com/jmoiron/sqlx"
 	"time"
+
+	"github.com/monchemin/C-19-API/patient/model"
+
+	"github.com/jmoiron/sqlx"
 )
 
 func (r repository) NewPatient(patient model.PatientRequest) (string, error) {

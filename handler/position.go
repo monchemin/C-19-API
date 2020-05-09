@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"c19/position/model"
+	"github.com/monchemin/C-19-API/position/model"
 
 	"github.com/gin-gonic/gin"
 )

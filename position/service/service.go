@@ -1,8 +1,8 @@
 package service
 
 import (
-	. "c19/position/model"
-	"c19/position/repository"
+	. "github.com/monchemin/C-19-API/position/model"
+	"github.com/monchemin/C-19-API/position/repository"
 )
 
 type PositionService interface {

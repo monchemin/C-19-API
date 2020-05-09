@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"c19/connector/pgsql"
-	"c19/position/model"
+	"github.com/monchemin/C-19-API/connector/pgsql"
+	"github.com/monchemin/C-19-API/position/model"
 )
 
 type PositionRepository interface {

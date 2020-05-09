@@ -1,10 +1,12 @@
 package repository
 
 import (
-	"c19/errors"
-	"c19/security/model"
-	"github.com/google/uuid"
 	"log"
+
+	"github.com/monchemin/C-19-API/errors"
+	"github.com/monchemin/C-19-API/security/model"
+
+	"github.com/google/uuid"
 )
 
 func (r repository) CreateUser(request model.UserCreateRequest) (string, error) {

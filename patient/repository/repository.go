@@ -1,9 +1,10 @@
 package repository
 
 import (
-	"c19/connector/pgsql"
-	"c19/patient/model"
 	"time"
+
+	"github.com/monchemin/C-19-API/connector/pgsql"
+	"github.com/monchemin/C-19-API/patient/model"
 )
 
 type PatientRepository interface {

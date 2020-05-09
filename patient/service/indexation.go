@@ -5,8 +5,8 @@ import (
 	"log"
 	"time"
 
-	"c19/connector/es"
-	"c19/patient/repository"
+	"github.com/monchemin/C-19-API/connector/es"
+	"github.com/monchemin/C-19-API/patient/repository"
 
 	"github.com/google/uuid"
 )

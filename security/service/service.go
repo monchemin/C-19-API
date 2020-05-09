@@ -1,9 +1,10 @@
 package service
 
 import (
-	"c19/security/model"
-	"c19/security/repository"
 	"context"
+
+	"github.com/monchemin/C-19-API/security/model"
+	"github.com/monchemin/C-19-API/security/repository"
 )
 
 type SecurityService interface {

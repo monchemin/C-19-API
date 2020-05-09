@@ -1,11 +1,12 @@
 package main
 
 import (
-	"c19/connector/es"
-	"c19/connector/pgsql"
-	"c19/patient/repository"
-	"c19/patient/service"
 	"os"
+
+	"github.com/monchemin/C-19-API/connector/es"
+	"github.com/monchemin/C-19-API/connector/pgsql"
+	"github.com/monchemin/C-19-API/patient/repository"
+	"github.com/monchemin/C-19-API/patient/service"
 )
 
 func main() {

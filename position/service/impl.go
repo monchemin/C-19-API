@@ -1,8 +1,8 @@
 package service
 
 import (
-	"c19/errors"
-	. "c19/position/model"
+	"github.com/monchemin/C-19-API/errors"
+	. "github.com/monchemin/C-19-API/position/model"
 )
 
 func (p positionService) NewCountry(request CountryRequest) error {

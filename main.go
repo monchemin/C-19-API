@@ -1,15 +1,27 @@
 package main
 
 import (
-	"github.com/gin-contrib/cors"
 	"os"
 
-	"c19/connector/es"
-	"c19/connector/pgsql"
-	"c19/handler"
+	"github.com/monchemin/C-19-API/connector/es"
+	"github.com/monchemin/C-19-API/connector/pgsql"
+	"github.com/monchemin/C-19-API/handler"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
+
+func init() {
+	os.Setenv("POSTGRES_HOSTNAME", "3.217.233.250")
+	os.Setenv("POSTGRES_USERNAME", "C19")
+	os.Setenv("POSTGRES_PASSWORD","c19PG@0520")
+	os.Setenv("POSTGRES_PORT", "5432")
+	os.Setenv("POSTGRES_DB", "C19")
+	os.Setenv("ES_URL", "http://3.217.233.250:9200")
+	os.Setenv("ES_USER", "user_api_go")
+	os.Setenv("ES_PASSWORD", "c19apigo@042020")
+	os.Setenv("SU", "root")
+}
 
 func main() {
 	pg, err := pgsql.Open()

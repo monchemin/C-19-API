@@ -1,10 +1,11 @@
 package service
 
 import (
-	appContext "c19/context"
-	"c19/security/jwt"
 	"context"
 	"golang.org/x/crypto/bcrypt"
+
+	appContext "github.com/monchemin/C-19-API/context"
+	"github.com/monchemin/C-19-API/security/jwt"
 )
 
 func hashPassword(password string) (string, error) {

@@ -1,4 +1,4 @@
-module c19
+module github.com/monchemin/C-19-API
 
 go 1.13
 

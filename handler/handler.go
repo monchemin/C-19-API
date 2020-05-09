@@ -1,14 +1,14 @@
 package handler
 
 import (
-	"c19/connector/es"
-	"c19/connector/pgsql"
-	"c19/patient/repository"
-	"c19/patient/service"
-	repository2 "c19/position/repository"
-	service2 "c19/position/service"
-	repository3 "c19/security/repository"
-	service3 "c19/security/service"
+	"github.com/monchemin/C-19-API/connector/es"
+	"github.com/monchemin/C-19-API/connector/pgsql"
+	"github.com/monchemin/C-19-API/patient/repository"
+	"github.com/monchemin/C-19-API/patient/service"
+	repository2 "github.com/monchemin/C-19-API/position/repository"
+	service2 "github.com/monchemin/C-19-API/position/service"
+	repository3 "github.com/monchemin/C-19-API/security/repository"
+	service3 "github.com/monchemin/C-19-API/security/service"
 
 	"github.com/gin-gonic/gin"
 )

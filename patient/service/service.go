@@ -1,9 +1,9 @@
 package service
 
 import (
-	"c19/connector/es"
-	"c19/patient/model"
-	"c19/patient/repository"
+	"github.com/monchemin/C-19-API/connector/es"
+	"github.com/monchemin/C-19-API/patient/model"
+	"github.com/monchemin/C-19-API/patient/repository"
 )
 
 type PatientService interface {

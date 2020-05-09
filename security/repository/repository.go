@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"c19/connector/pgsql"
-	"c19/security/model"
+	"github.com/monchemin/C-19-API/connector/pgsql"
+	"github.com/monchemin/C-19-API/security/model"
 )
 
 

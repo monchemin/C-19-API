@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"c19/patient/model"
+	"github.com/monchemin/C-19-API/patient/model"
 
 	"github.com/gin-gonic/gin"
 )

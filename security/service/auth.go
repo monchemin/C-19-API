@@ -1,12 +1,14 @@
 package service
 
 import (
-	appContext "c19/context"
-	"c19/security/jwt"
-	"c19/security/repository"
+
 	"context"
 	"log"
 	"os"
+
+	appContext "github.com/monchemin/C-19-API/context"
+	"github.com/monchemin/C-19-API/security/jwt"
+	"github.com/monchemin/C-19-API/security/repository"
 )
 
 const (

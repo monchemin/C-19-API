@@ -1,13 +1,15 @@
 package handler
 
 import (
-	appContext "c19/context"
-	"c19/security/model"
 	"context"
-	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"strings"
+
+	appContext "github.com/monchemin/C-19-API/context"
+	"github.com/monchemin/C-19-API/security/model"
+
+	"github.com/gin-gonic/gin"
 )
 
 func (h *handler) Login(c *gin.Context) {
